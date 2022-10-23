@@ -2,9 +2,9 @@
 package src.views.home;
 
 public enum ModulosApp {
-    USUARIO, DESPESAS, RESERVAS, VALOR_PAGO_NO_MES;
+    PESSOAS, DESPESAS, RESERVAS, VALOR_PAGO_NO_MES;
 
-    public boolean isUsuario(){ return this.equals(USUARIO); }
+    public boolean isPessoas(){ return this.equals(PESSOAS); }
     
     public boolean isDespesas(){ return this.equals(DESPESAS); }
     
