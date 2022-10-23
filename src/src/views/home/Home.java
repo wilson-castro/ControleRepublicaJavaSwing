@@ -9,7 +9,7 @@ public class Home extends javax.swing.JFrame {
     private volatile int myX = 0;
     private volatile int myY = 0;
     
-    private ModulosApp moduloAtual = ModulosApp.PESSOAS;
+    private ModulosApp moduloAtual = null;
   
     public Home() {
         initComponents();
@@ -23,7 +23,7 @@ public class Home extends javax.swing.JFrame {
     }
     
     private Color getColorDoMenuItemPeloModuloAtual(ModulosApp modulo){
-        return moduloAtual.equals(modulo) ? new Color(54,57,54) : new Color(72,75,72);
+        return modulo.equals(moduloAtual) ? new Color(54,57,54) : new Color(72,75,72);
     }
     
     private void handleItemMenuExited(ModulosApp moduleExited) {
@@ -86,7 +86,8 @@ public class Home extends javax.swing.JFrame {
         jLabel_menuItemReservas = new javax.swing.JLabel();
         jPanel_menuItemValorPagoMes = new src.components.JPanel_Rounded();
         jLabel_menuItemValorPagoMes = new javax.swing.JLabel();
-        jInternalFrame_containers = new javax.swing.JInternalFrame();
+        jPanel_container = new javax.swing.JPanel();
+        jLabel_imgBemVindo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -242,7 +243,7 @@ public class Home extends javax.swing.JFrame {
 
         jPanel_sidebar.add(jPanel_lineIconHomeMainMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 119, -1, -1));
 
-        jPanel_menuItemPessoas.setBackground(new java.awt.Color(54, 57, 54));
+        jPanel_menuItemPessoas.setBackground(new java.awt.Color(72, 75, 72));
         jPanel_menuItemPessoas.setRoundBottomLeft(10);
         jPanel_menuItemPessoas.setRoundBottomRight(10);
         jPanel_menuItemPessoas.setRoundTopLeft(10);
@@ -388,20 +389,28 @@ public class Home extends javax.swing.JFrame {
 
         jPanel_body.add(jPanel_sidebar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1, 37, -1, 442));
 
-        jInternalFrame_containers.setVisible(true);
+        jPanel_container.setBackground(new java.awt.Color(255, 255, 255));
 
-        javax.swing.GroupLayout jInternalFrame_containersLayout = new javax.swing.GroupLayout(jInternalFrame_containers.getContentPane());
-        jInternalFrame_containers.getContentPane().setLayout(jInternalFrame_containersLayout);
-        jInternalFrame_containersLayout.setHorizontalGroup(
-            jInternalFrame_containersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+        jLabel_imgBemVindo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/src/images/bemVindo.png"))); // NOI18N
+
+        javax.swing.GroupLayout jPanel_containerLayout = new javax.swing.GroupLayout(jPanel_container);
+        jPanel_container.setLayout(jPanel_containerLayout);
+        jPanel_containerLayout.setHorizontalGroup(
+            jPanel_containerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel_containerLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel_imgBemVindo, javax.swing.GroupLayout.PREFERRED_SIZE, 611, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(13, Short.MAX_VALUE))
         );
-        jInternalFrame_containersLayout.setVerticalGroup(
-            jInternalFrame_containersLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 384, Short.MAX_VALUE)
+        jPanel_containerLayout.setVerticalGroup(
+            jPanel_containerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel_containerLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel_imgBemVindo, javax.swing.GroupLayout.PREFERRED_SIZE, 376, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(28, Short.MAX_VALUE))
         );
 
-        jPanel_body.add(jInternalFrame_containers, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 50, 650, 420));
+        jPanel_body.add(jPanel_container, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 50, 630, 410));
 
         getContentPane().add(jPanel_body, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 480));
 
@@ -479,6 +488,10 @@ public class Home extends javax.swing.JFrame {
 
     private void jLabel_menuItemPessoasMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel_menuItemPessoasMousePressed
         handleItemMenuSelected(ModulosApp.PESSOAS);
+        
+ 
+        
+        
     }//GEN-LAST:event_jLabel_menuItemPessoasMousePressed
 
     private void jLabel_menuItemDespesasMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel_menuItemDespesasMousePressed
@@ -502,9 +515,9 @@ public class Home extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JInternalFrame jInternalFrame_containers;
     private javax.swing.JLabel jLabel_botaoFechar;
     private javax.swing.JLabel jLabel_botaoMinimizar;
+    private javax.swing.JLabel jLabel_imgBemVindo;
     private javax.swing.JLabel jLabel_imgHome;
     private javax.swing.JLabel jLabel_menuItemDespesas;
     private javax.swing.JLabel jLabel_menuItemPessoas;
@@ -513,6 +526,7 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel_actionsToolbar;
     private javax.swing.JPanel jPanel_body;
     private javax.swing.JPanel jPanel_borderToobar;
+    private javax.swing.JPanel jPanel_container;
     private javax.swing.JPanel jPanel_container_imgHome;
     private javax.swing.JPanel jPanel_lineIconHomeMainMenu;
     private src.components.JPanel_Rounded jPanel_menuItemDespesas;
