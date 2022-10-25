@@ -2,6 +2,7 @@
 package src.views.home;
 
 import java.awt.Color;
+import java.awt.Component;
 import javax.swing.JFrame;
 
 public class Home extends javax.swing.JFrame {
@@ -59,9 +60,17 @@ public class Home extends javax.swing.JFrame {
         }
     }
     
-    private void handleItemMenuSelected(ModulosApp moduloSelecionado){
+    private void handleItemMenuSelected(ModulosApp moduloSelecionado, Component component){
         handleColorItemMenuSelected(moduloSelecionado);
         moduloAtual = moduloSelecionado;
+        
+        this.jPanel_container.removeAll();
+        this.jPanel_container.repaint();
+        this.jPanel_container.revalidate();
+        
+        this.jPanel_container.add(component);
+        this.jPanel_container.repaint();
+        this.jPanel_container.revalidate();
     }
     
     @SuppressWarnings("unchecked")
@@ -87,7 +96,11 @@ public class Home extends javax.swing.JFrame {
         jPanel_menuItemValorPagoMes = new src.components.JPanel_Rounded();
         jLabel_menuItemValorPagoMes = new javax.swing.JLabel();
         jPanel_container = new javax.swing.JPanel();
-        jLabel_imgBemVindo = new javax.swing.JLabel();
+        panelLogoHome = new src.views.home.PanelLogoHome();
+        panelDespesas = new src.views.despesas.Despesas();
+        panelReservas = new src.views.reservas.Reservas();
+        panelValorPagoNoMes = new src.views.val_pago_mes.Valor_pago_no_mes();
+        panelPessoas = new src.views.pessoas.Pessoas();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -100,7 +113,6 @@ public class Home extends javax.swing.JFrame {
         jPanel_body.setPreferredSize(new java.awt.Dimension(891, 480));
         jPanel_body.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel_toolbar.setBackground(new java.awt.Color(60, 63, 65));
         jPanel_toolbar.setPreferredSize(new java.awt.Dimension(100, 35));
         jPanel_toolbar.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseDragged(java.awt.event.MouseEvent evt) {
@@ -115,7 +127,6 @@ public class Home extends javax.swing.JFrame {
 
         jPanel_actionsToolbar.setPreferredSize(new java.awt.Dimension(100, 35));
 
-        jLabel_botaoFechar.setBackground(new java.awt.Color(60, 63, 65));
         jLabel_botaoFechar.setFont(new java.awt.Font("Liberation Sans", 1, 13)); // NOI18N
         jLabel_botaoFechar.setForeground(new java.awt.Color(204, 204, 204));
         jLabel_botaoFechar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -136,7 +147,6 @@ public class Home extends javax.swing.JFrame {
             }
         });
 
-        jLabel_botaoMinimizar.setBackground(new java.awt.Color(60, 63, 65));
         jLabel_botaoMinimizar.setFont(new java.awt.Font("Liberation Sans", 1, 13)); // NOI18N
         jLabel_botaoMinimizar.setForeground(new java.awt.Color(204, 204, 204));
         jLabel_botaoMinimizar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -205,7 +215,6 @@ public class Home extends javax.swing.JFrame {
 
         jPanel_body.add(jPanel_borderToobar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1, 36, 890, -1));
 
-        jPanel_sidebar.setBackground(new java.awt.Color(60, 63, 65));
         jPanel_sidebar.setMinimumSize(new java.awt.Dimension(210, 462));
         jPanel_sidebar.setPreferredSize(new java.awt.Dimension(220, 462));
         jPanel_sidebar.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -390,25 +399,60 @@ public class Home extends javax.swing.JFrame {
         jPanel_body.add(jPanel_sidebar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1, 37, -1, 442));
 
         jPanel_container.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel_container.setLayout(new java.awt.CardLayout());
 
-        jLabel_imgBemVindo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/src/images/bemVindo.png"))); // NOI18N
+        javax.swing.GroupLayout panelLogoHomeLayout = new javax.swing.GroupLayout(panelLogoHome);
+        panelLogoHome.setLayout(panelLogoHomeLayout);
+        panelLogoHomeLayout.setHorizontalGroup(
+            panelLogoHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 630, Short.MAX_VALUE)
+        );
+        panelLogoHomeLayout.setVerticalGroup(
+            panelLogoHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 410, Short.MAX_VALUE)
+        );
 
-        javax.swing.GroupLayout jPanel_containerLayout = new javax.swing.GroupLayout(jPanel_container);
-        jPanel_container.setLayout(jPanel_containerLayout);
-        jPanel_containerLayout.setHorizontalGroup(
-            jPanel_containerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel_containerLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel_imgBemVindo, javax.swing.GroupLayout.PREFERRED_SIZE, 611, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(13, Short.MAX_VALUE))
+        jPanel_container.add(panelLogoHome, "card6");
+
+        javax.swing.GroupLayout panelDespesasLayout = new javax.swing.GroupLayout(panelDespesas);
+        panelDespesas.setLayout(panelDespesasLayout);
+        panelDespesasLayout.setHorizontalGroup(
+            panelDespesasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 630, Short.MAX_VALUE)
         );
-        jPanel_containerLayout.setVerticalGroup(
-            jPanel_containerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel_containerLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel_imgBemVindo, javax.swing.GroupLayout.PREFERRED_SIZE, 376, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(28, Short.MAX_VALUE))
+        panelDespesasLayout.setVerticalGroup(
+            panelDespesasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 410, Short.MAX_VALUE)
         );
+
+        jPanel_container.add(panelDespesas, "card3");
+
+        javax.swing.GroupLayout panelReservasLayout = new javax.swing.GroupLayout(panelReservas);
+        panelReservas.setLayout(panelReservasLayout);
+        panelReservasLayout.setHorizontalGroup(
+            panelReservasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 630, Short.MAX_VALUE)
+        );
+        panelReservasLayout.setVerticalGroup(
+            panelReservasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 410, Short.MAX_VALUE)
+        );
+
+        jPanel_container.add(panelReservas, "card4");
+
+        javax.swing.GroupLayout panelValorPagoNoMesLayout = new javax.swing.GroupLayout(panelValorPagoNoMes);
+        panelValorPagoNoMes.setLayout(panelValorPagoNoMesLayout);
+        panelValorPagoNoMesLayout.setHorizontalGroup(
+            panelValorPagoNoMesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 630, Short.MAX_VALUE)
+        );
+        panelValorPagoNoMesLayout.setVerticalGroup(
+            panelValorPagoNoMesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 410, Short.MAX_VALUE)
+        );
+
+        jPanel_container.add(panelValorPagoNoMes, "card5");
+        jPanel_container.add(panelPessoas, "card6");
 
         jPanel_body.add(jPanel_container, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 50, 630, 410));
 
@@ -487,23 +531,19 @@ public class Home extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel_menuItemValorPagoMesMouseExited
 
     private void jLabel_menuItemPessoasMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel_menuItemPessoasMousePressed
-        handleItemMenuSelected(ModulosApp.PESSOAS);
-        
- 
-        
-        
+        handleItemMenuSelected(ModulosApp.PESSOAS, this.panelPessoas);
     }//GEN-LAST:event_jLabel_menuItemPessoasMousePressed
 
     private void jLabel_menuItemDespesasMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel_menuItemDespesasMousePressed
-        handleItemMenuSelected(ModulosApp.DESPESAS);
+        handleItemMenuSelected(ModulosApp.DESPESAS, this.panelDespesas);
     }//GEN-LAST:event_jLabel_menuItemDespesasMousePressed
 
     private void jLabel_menuItemReservasMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel_menuItemReservasMousePressed
-        handleItemMenuSelected(ModulosApp.RESERVAS);
+        handleItemMenuSelected(ModulosApp.RESERVAS, this.panelReservas);
     }//GEN-LAST:event_jLabel_menuItemReservasMousePressed
 
     private void jLabel_menuItemValorPagoMesMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel_menuItemValorPagoMesMousePressed
-        handleItemMenuSelected(ModulosApp.VALOR_PAGO_NO_MES);
+        handleItemMenuSelected(ModulosApp.VALOR_PAGO_NO_MES, this.panelValorPagoNoMes);
     }//GEN-LAST:event_jLabel_menuItemValorPagoMesMousePressed
 
     public static void main(String args[]) {
@@ -517,7 +557,6 @@ public class Home extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel_botaoFechar;
     private javax.swing.JLabel jLabel_botaoMinimizar;
-    private javax.swing.JLabel jLabel_imgBemVindo;
     private javax.swing.JLabel jLabel_imgHome;
     private javax.swing.JLabel jLabel_menuItemDespesas;
     private javax.swing.JLabel jLabel_menuItemPessoas;
@@ -535,5 +574,10 @@ public class Home extends javax.swing.JFrame {
     private src.components.JPanel_Rounded jPanel_menuItemValorPagoMes;
     private javax.swing.JPanel jPanel_sidebar;
     private javax.swing.JPanel jPanel_toolbar;
+    private src.views.despesas.Despesas panelDespesas;
+    private src.views.home.PanelLogoHome panelLogoHome;
+    private src.views.pessoas.Pessoas panelPessoas;
+    private src.views.reservas.Reservas panelReservas;
+    private src.views.val_pago_mes.Valor_pago_no_mes panelValorPagoNoMes;
     // End of variables declaration//GEN-END:variables
 }
