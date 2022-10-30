@@ -1,30 +1,37 @@
-
 package src.models;
 
-import java.util.UUID;
-import src.utils.Constantes;
-import src.utils.RandomString;
+import com.google.gson.Gson;
+import src.services.Modal;
 
-public class Pessoa {    
-    
+public class Pessoa extends Modal {
+
     private String codigo;
     private String nome;
     private String email;
     private float totalRendimentos;
-        
-    public Pessoa() {}
+    private String inputString = "";
+
+    public Pessoa(String inputString) {
+        this.inputString = null;
+        this.inputString = inputString;
+        String[] cells = this.inputString.split(";");
+        this.codigo = cells[0];
+        this.nome = cells[1];
+        this.email = cells[2];
+        this.totalRendimentos = Float.parseFloat(cells[3]);
+    }
 
     public Pessoa(String nome, String email, float totalRendimentos) {
         this.nome = nome;
         this.email = email;
         this.totalRendimentos = totalRendimentos;
     }
-    
+
     public Pessoa(String codigo, String nome, String email, float totalRendimentos) {
-     this.codigo = codigo;
-     this.nome = nome;
-     this.email = email;
-     this.totalRendimentos = totalRendimentos;
+        this.codigo = codigo;
+        this.nome = nome;
+        this.email = email;
+        this.totalRendimentos = totalRendimentos;
     }
 
     public String getCodigo() {
@@ -58,19 +65,23 @@ public class Pessoa {
     public void setTotalRendimentos(float totalRendimentos) {
         this.totalRendimentos = totalRendimentos;
     }
-    
-    
-    public static Pessoa create(String nome, String email, float totalRendimentos){
-        if(nome != null && email != null){
-            String codigo = RandomString.getAlphaNumericString(Constantes.NUMERO_DIGITOS_CODIGOS);
-            return new Pessoa(codigo,nome, email, totalRendimentos);
-        }
-        
-        return null;
+
+    //    public static Pessoa create(String nome, String email, float totalRendimentos){
+//        if(nome != null && email != null){
+//            String codigo = RandomString.getAlphaNumericString(Constantes.NUMERO_DIGITOS_CODIGOS);
+//            return new Pessoa(codigo,nome, email, totalRendimentos);
+//        }
+//        
+//        return null;
+//    }
+    @Override
+    public String toJson() {
+        Gson gson = new Gson();
+        return gson.toJson(Pessoa.this);
     }
-    
-    public String[] getValues(){
-        String[] values = { this.codigo, this.nome, this.email, this.totalRendimentos+""};
+
+    public Object[] getValues() {
+        Object[] values = new Object[]{this.getCodigo(),this.getNome(),this.getEmail(),this.getTotalRendimentos()};
         return values;
     }
 }

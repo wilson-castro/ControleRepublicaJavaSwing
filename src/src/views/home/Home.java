@@ -1,56 +1,68 @@
-
 package src.views.home;
 
 import java.awt.Color;
 import java.awt.Component;
 import javax.swing.JFrame;
+import src.models.Troca;
+import src.views.despesas.Despesas;
+import src.views.pessoas.Pessoas;
+import src.views.reservas.Reservas;
+import src.views.val_pago_mes.Valor_pago_no_mes;
 
 public class Home extends javax.swing.JFrame {
 
     private volatile int myX = 0;
     private volatile int myY = 0;
-    
+
     private ModulosApp moduloAtual = null;
-  
+
     public Home() {
         initComponents();
     }
-    
-    private void setDefaultColorAllMenuItems(){
-        this.jPanel_menuItemPessoas.setBackground(new Color(72,75,72));
-        this.jPanel_menuItemDespesas.setBackground(new Color(72,75,72));
-        this.jPanel_menuItemReservas.setBackground(new Color(72,75,72));
-        this.jPanel_menuItemValorPagoMes.setBackground(new Color(72,75,72));
+
+    private void setDefaultColorAllMenuItems() {
+        this.jPanel_menuItemPessoas.setBackground(new Color(72, 75, 72));
+        this.jPanel_menuItemDespesas.setBackground(new Color(72, 75, 72));
+        this.jPanel_menuItemReservas.setBackground(new Color(72, 75, 72));
+        this.jPanel_menuItemValorPagoMes.setBackground(new Color(72, 75, 72));
     }
-    
-    private Color getColorDoMenuItemPeloModuloAtual(ModulosApp modulo){
-        return modulo.equals(moduloAtual) ? new Color(54,57,54) : new Color(72,75,72);
+
+    private Color getColorDoMenuItemPeloModuloAtual(ModulosApp modulo) {
+        return modulo.equals(moduloAtual) ? new Color(54, 57, 54) : new Color(72, 75, 72);
     }
-    
+
     private void handleItemMenuExited(ModulosApp moduleExited) {
         Color corPadraoItemMenu = getColorDoMenuItemPeloModuloAtual(moduleExited);
-        
-        switch(moduleExited) {
-            case PESSOAS -> this.jPanel_menuItemPessoas.setBackground(corPadraoItemMenu);
-            case DESPESAS -> this.jPanel_menuItemDespesas.setBackground(corPadraoItemMenu);
-            case RESERVAS -> this.jPanel_menuItemReservas.setBackground(corPadraoItemMenu);
-            case VALOR_PAGO_NO_MES -> this.jPanel_menuItemValorPagoMes.setBackground(corPadraoItemMenu);
+
+        switch (moduleExited) {
+            case PESSOAS ->
+                this.jPanel_menuItemPessoas.setBackground(corPadraoItemMenu);
+            case DESPESAS ->
+                this.jPanel_menuItemDespesas.setBackground(corPadraoItemMenu);
+            case RESERVAS ->
+                this.jPanel_menuItemReservas.setBackground(corPadraoItemMenu);
+            case VALOR_PAGO_NO_MES ->
+                this.jPanel_menuItemValorPagoMes.setBackground(corPadraoItemMenu);
             default -> {
                 setDefaultColorAllMenuItems();
             }
         }
     }
-    
-    private void handleColorItemMenuSelected(ModulosApp moduloSelecionado){
-        Color corPadraoItemMenu = new Color(72,75,72);
-        Color corModuloSelecionado = new Color(54,57,54);
-        
+
+    private void handleColorItemMenuSelected(ModulosApp moduloSelecionado) {
+        Color corPadraoItemMenu = new Color(72, 75, 72);
+        Color corModuloSelecionado = new Color(54, 57, 54);
+
         setDefaultColorAllMenuItems();
-        switch(moduloSelecionado) {
-            case PESSOAS -> this.jPanel_menuItemPessoas.setBackground(corModuloSelecionado);
-            case DESPESAS -> this.jPanel_menuItemDespesas.setBackground(corModuloSelecionado);
-            case RESERVAS -> this.jPanel_menuItemReservas.setBackground(corModuloSelecionado);
-            case VALOR_PAGO_NO_MES -> this.jPanel_menuItemValorPagoMes.setBackground(corModuloSelecionado);
+        switch (moduloSelecionado) {
+            case PESSOAS ->
+                this.jPanel_menuItemPessoas.setBackground(corModuloSelecionado);
+            case DESPESAS ->
+                this.jPanel_menuItemDespesas.setBackground(corModuloSelecionado);
+            case RESERVAS ->
+                this.jPanel_menuItemReservas.setBackground(corModuloSelecionado);
+            case VALOR_PAGO_NO_MES ->
+                this.jPanel_menuItemValorPagoMes.setBackground(corModuloSelecionado);
             default -> {
                 this.jPanel_menuItemPessoas.setBackground(corPadraoItemMenu);
                 this.jPanel_menuItemDespesas.setBackground(corPadraoItemMenu);
@@ -59,20 +71,20 @@ public class Home extends javax.swing.JFrame {
             }
         }
     }
-    
-    private void handleItemMenuSelected(ModulosApp moduloSelecionado, Component component){
+
+    private void handleItemMenuSelected(ModulosApp moduloSelecionado, Component component) {
         handleColorItemMenuSelected(moduloSelecionado);
         moduloAtual = moduloSelecionado;
-        
+
         this.jPanel_container.removeAll();
         this.jPanel_container.repaint();
         this.jPanel_container.revalidate();
-        
+
         this.jPanel_container.add(component);
         this.jPanel_container.repaint();
         this.jPanel_container.revalidate();
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -96,11 +108,6 @@ public class Home extends javax.swing.JFrame {
         jPanel_menuItemValorPagoMes = new src.components.JPanel_Rounded();
         jLabel_menuItemValorPagoMes = new javax.swing.JLabel();
         jPanel_container = new javax.swing.JPanel();
-        panelLogoHome = new src.views.home.PanelLogoHome();
-        panelDespesas = new src.views.despesas.Despesas();
-        panelReservas = new src.views.reservas.Reservas();
-        panelValorPagoNoMes = new src.views.val_pago_mes.Valor_pago_no_mes();
-        panelPessoas = new src.views.pessoas.Pessoas();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -108,11 +115,12 @@ public class Home extends javax.swing.JFrame {
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel_body.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel_body.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 0, 0)));
+        jPanel_body.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
         jPanel_body.setMinimumSize(new java.awt.Dimension(891, 480));
         jPanel_body.setPreferredSize(new java.awt.Dimension(891, 480));
         jPanel_body.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jPanel_toolbar.setBackground(new java.awt.Color(102, 102, 102));
         jPanel_toolbar.setPreferredSize(new java.awt.Dimension(100, 35));
         jPanel_toolbar.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseDragged(java.awt.event.MouseEvent evt) {
@@ -127,6 +135,7 @@ public class Home extends javax.swing.JFrame {
 
         jPanel_actionsToolbar.setPreferredSize(new java.awt.Dimension(100, 35));
 
+        jLabel_botaoFechar.setBackground(new java.awt.Color(102, 102, 102));
         jLabel_botaoFechar.setFont(new java.awt.Font("Liberation Sans", 1, 13)); // NOI18N
         jLabel_botaoFechar.setForeground(new java.awt.Color(204, 204, 204));
         jLabel_botaoFechar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -147,6 +156,7 @@ public class Home extends javax.swing.JFrame {
             }
         });
 
+        jLabel_botaoMinimizar.setBackground(new java.awt.Color(102, 102, 102));
         jLabel_botaoMinimizar.setFont(new java.awt.Font("Liberation Sans", 1, 13)); // NOI18N
         jLabel_botaoMinimizar.setForeground(new java.awt.Color(204, 204, 204));
         jLabel_botaoMinimizar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -189,7 +199,7 @@ public class Home extends javax.swing.JFrame {
         jPanel_toolbarLayout.setHorizontalGroup(
             jPanel_toolbarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_toolbarLayout.createSequentialGroup()
-                .addGap(0, 789, Short.MAX_VALUE)
+                .addGap(0, 790, Short.MAX_VALUE)
                 .addComponent(jPanel_actionsToolbar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanel_toolbarLayout.setVerticalGroup(
@@ -197,7 +207,7 @@ public class Home extends javax.swing.JFrame {
             .addComponent(jPanel_actionsToolbar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        jPanel_body.add(jPanel_toolbar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1, 1, 889, -1));
+        jPanel_body.add(jPanel_toolbar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1, 1, 890, -1));
 
         jPanel_borderToobar.setBackground(new java.awt.Color(66, 69, 66));
         jPanel_borderToobar.setPreferredSize(new java.awt.Dimension(100, 1));
@@ -215,6 +225,7 @@ public class Home extends javax.swing.JFrame {
 
         jPanel_body.add(jPanel_borderToobar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1, 36, 890, -1));
 
+        jPanel_sidebar.setBackground(new java.awt.Color(102, 102, 102));
         jPanel_sidebar.setMinimumSize(new java.awt.Dimension(210, 462));
         jPanel_sidebar.setPreferredSize(new java.awt.Dimension(220, 462));
         jPanel_sidebar.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -399,62 +410,10 @@ public class Home extends javax.swing.JFrame {
         jPanel_body.add(jPanel_sidebar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1, 37, -1, 442));
 
         jPanel_container.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel_container.setMaximumSize(new java.awt.Dimension(670, 440));
+        jPanel_container.setMinimumSize(new java.awt.Dimension(670, 440));
         jPanel_container.setLayout(new java.awt.CardLayout());
-
-        javax.swing.GroupLayout panelLogoHomeLayout = new javax.swing.GroupLayout(panelLogoHome);
-        panelLogoHome.setLayout(panelLogoHomeLayout);
-        panelLogoHomeLayout.setHorizontalGroup(
-            panelLogoHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 630, Short.MAX_VALUE)
-        );
-        panelLogoHomeLayout.setVerticalGroup(
-            panelLogoHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 410, Short.MAX_VALUE)
-        );
-
-        jPanel_container.add(panelLogoHome, "card6");
-
-        javax.swing.GroupLayout panelDespesasLayout = new javax.swing.GroupLayout(panelDespesas);
-        panelDespesas.setLayout(panelDespesasLayout);
-        panelDespesasLayout.setHorizontalGroup(
-            panelDespesasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 630, Short.MAX_VALUE)
-        );
-        panelDespesasLayout.setVerticalGroup(
-            panelDespesasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 410, Short.MAX_VALUE)
-        );
-
-        jPanel_container.add(panelDespesas, "card3");
-
-        javax.swing.GroupLayout panelReservasLayout = new javax.swing.GroupLayout(panelReservas);
-        panelReservas.setLayout(panelReservasLayout);
-        panelReservasLayout.setHorizontalGroup(
-            panelReservasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 630, Short.MAX_VALUE)
-        );
-        panelReservasLayout.setVerticalGroup(
-            panelReservasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 410, Short.MAX_VALUE)
-        );
-
-        jPanel_container.add(panelReservas, "card4");
-
-        javax.swing.GroupLayout panelValorPagoNoMesLayout = new javax.swing.GroupLayout(panelValorPagoNoMes);
-        panelValorPagoNoMes.setLayout(panelValorPagoNoMesLayout);
-        panelValorPagoNoMesLayout.setHorizontalGroup(
-            panelValorPagoNoMesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 630, Short.MAX_VALUE)
-        );
-        panelValorPagoNoMesLayout.setVerticalGroup(
-            panelValorPagoNoMesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 410, Short.MAX_VALUE)
-        );
-
-        jPanel_container.add(panelValorPagoNoMes, "card5");
-        jPanel_container.add(panelPessoas, "card6");
-
-        jPanel_body.add(jPanel_container, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 50, 630, 410));
+        jPanel_body.add(jPanel_container, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 37, 670, 446));
 
         getContentPane().add(jPanel_body, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 480));
 
@@ -467,15 +426,15 @@ public class Home extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel_botaoFecharMouseEntered
 
     private void jLabel_botaoFecharMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel_botaoFecharMouseExited
-        this.jLabel_botaoFechar.setBackground(new Color(60,63,65));
+        this.jLabel_botaoFechar.setBackground(new Color(60, 63, 65));
     }//GEN-LAST:event_jLabel_botaoFecharMouseExited
 
     private void jLabel_botaoMinimizarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel_botaoMinimizarMouseEntered
-        this.jLabel_botaoMinimizar.setBackground(new Color(102,102,102));
+        this.jLabel_botaoMinimizar.setBackground(new Color(102, 102, 102));
     }//GEN-LAST:event_jLabel_botaoMinimizarMouseEntered
 
     private void jLabel_botaoMinimizarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel_botaoMinimizarMouseExited
-        this.jLabel_botaoMinimizar.setBackground(new Color(60,63,65));
+        this.jLabel_botaoMinimizar.setBackground(new Color(60, 63, 65));
     }//GEN-LAST:event_jLabel_botaoMinimizarMouseExited
 
     private void jLabel_botaoFecharMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel_botaoFecharMousePressed
@@ -499,19 +458,19 @@ public class Home extends javax.swing.JFrame {
     }//GEN-LAST:event_jPanel_toolbarMousePressed
 
     private void jLabel_menuItemPessoasMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel_menuItemPessoasMouseEntered
-        this.jPanel_menuItemPessoas.setBackground(new Color(81,86,81));
+        this.jPanel_menuItemPessoas.setBackground(new Color(81, 86, 81));
     }//GEN-LAST:event_jLabel_menuItemPessoasMouseEntered
 
     private void jLabel_menuItemDespesasMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel_menuItemDespesasMouseEntered
-        this.jPanel_menuItemDespesas.setBackground(new Color(81,86,81));
+        this.jPanel_menuItemDespesas.setBackground(new Color(81, 86, 81));
     }//GEN-LAST:event_jLabel_menuItemDespesasMouseEntered
 
     private void jLabel_menuItemReservasMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel_menuItemReservasMouseEntered
-        this.jPanel_menuItemReservas.setBackground(new Color(81,86,81));
+        this.jPanel_menuItemReservas.setBackground(new Color(81, 86, 81));
     }//GEN-LAST:event_jLabel_menuItemReservasMouseEntered
 
     private void jLabel_menuItemValorPagoMesMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel_menuItemValorPagoMesMouseEntered
-        this.jPanel_menuItemValorPagoMes.setBackground(new Color(81,86,81));
+        this.jPanel_menuItemValorPagoMes.setBackground(new Color(81, 86, 81));
     }//GEN-LAST:event_jLabel_menuItemValorPagoMesMouseEntered
 
     private void jLabel_menuItemPessoasMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel_menuItemPessoasMouseExited
@@ -523,7 +482,7 @@ public class Home extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel_menuItemDespesasMouseExited
 
     private void jLabel_menuItemReservasMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel_menuItemReservasMouseExited
-       handleItemMenuExited(ModulosApp.RESERVAS);
+        handleItemMenuExited(ModulosApp.RESERVAS);
     }//GEN-LAST:event_jLabel_menuItemReservasMouseExited
 
     private void jLabel_menuItemValorPagoMesMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel_menuItemValorPagoMesMouseExited
@@ -531,19 +490,27 @@ public class Home extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel_menuItemValorPagoMesMouseExited
 
     private void jLabel_menuItemPessoasMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel_menuItemPessoasMousePressed
-        handleItemMenuSelected(ModulosApp.PESSOAS, this.panelPessoas);
+        Pessoas in = new Pessoas();
+        Troca.ChangePanel(jPanel_container, in);
+        handleItemMenuSelected(ModulosApp.PESSOAS, in);
     }//GEN-LAST:event_jLabel_menuItemPessoasMousePressed
 
     private void jLabel_menuItemDespesasMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel_menuItemDespesasMousePressed
-        handleItemMenuSelected(ModulosApp.DESPESAS, this.panelDespesas);
+        Despesas in = new Despesas();
+        Troca.ChangePanel(jPanel_container, in);
+        handleItemMenuSelected(ModulosApp.DESPESAS, in);
     }//GEN-LAST:event_jLabel_menuItemDespesasMousePressed
 
     private void jLabel_menuItemReservasMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel_menuItemReservasMousePressed
-        handleItemMenuSelected(ModulosApp.RESERVAS, this.panelReservas);
+        Reservas in = new Reservas();
+        Troca.ChangePanel(jPanel_container, in);
+        handleItemMenuSelected(ModulosApp.RESERVAS, in);
     }//GEN-LAST:event_jLabel_menuItemReservasMousePressed
 
     private void jLabel_menuItemValorPagoMesMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel_menuItemValorPagoMesMousePressed
-        handleItemMenuSelected(ModulosApp.VALOR_PAGO_NO_MES, this.panelValorPagoNoMes);
+        Valor_pago_no_mes in = new Valor_pago_no_mes();
+        Troca.ChangePanel(jPanel_container, in);
+        handleItemMenuSelected(ModulosApp.VALOR_PAGO_NO_MES, in);
     }//GEN-LAST:event_jLabel_menuItemValorPagoMesMousePressed
 
     public static void main(String args[]) {
@@ -574,10 +541,5 @@ public class Home extends javax.swing.JFrame {
     private src.components.JPanel_Rounded jPanel_menuItemValorPagoMes;
     private javax.swing.JPanel jPanel_sidebar;
     private javax.swing.JPanel jPanel_toolbar;
-    private src.views.despesas.Despesas panelDespesas;
-    private src.views.home.PanelLogoHome panelLogoHome;
-    private src.views.pessoas.Pessoas panelPessoas;
-    private src.views.reservas.Reservas panelReservas;
-    private src.views.val_pago_mes.Valor_pago_no_mes panelValorPagoNoMes;
     // End of variables declaration//GEN-END:variables
 }

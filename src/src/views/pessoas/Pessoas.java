@@ -1,96 +1,137 @@
-
 package src.views.pessoas;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import src.models.Pessoa;
+import src.services.DataManager;
+import src.utils.Constantes;
 
+public final class Pessoas extends javax.swing.JPanel {
 
-public class Pessoas extends javax.swing.JPanel {
+    private DefaultTableModel model = null;
+    DataManager<Pessoa> dmPessoa;
 
     public Pessoas() {
         initComponents();
+        this.model = (DefaultTableModel) jTable_alunos.getModel();
+        refreshTable();
     }
-    
-    private void setEstadoPadraoBotoes(){
+
+    private void setEstadoPadraoBotoes() {
         this.jButton_salvar.setEnabled(false);
         this.jButton_editar.setEnabled(false);
         this.jButton_Excluir.setEnabled(false);
-        
+
         this.jButton_novo.setEnabled(true);
-        this.jButton_cancelar.setEnabled(true);
+        this.jButton_atualizar.setEnabled(true);
     }
-    
+
     private void limparInputs() {
         this.jTextField_codAluno.setText(null);
-        this.jTextField_email.setText(null);
+        this.jTextField_rendimentos.setText(null);
         this.jTextField_nome.setText(null);
         this.jTextField_pesquisar.setText(null);
-        this.jFormattedTextField_totalRendimentos.setText(null);
+        this.jTextField_rendimentos.setText(null);
     }
-    
-    private void handleChangeNovo(){
+
+    private void handleChangeNovo() {
         setEstadoPadraoBotoes();
-        limparInputs();
-        
+        int option = JOptionPane.showConfirmDialog(this, "Deseja limpar os campos?");
+        if (option == 0) {
+            limparInputs();
+        }
+
         this.jButton_salvar.setEnabled(true);
     }
-    
-    private void handleChangeSalvar(){
-        String totalRendimentos = this.jFormattedTextField_totalRendimentos.getText();
+
+    private void handleChangeSalvar() throws Exception {
+        String totalRendimentos = this.jTextField_rendimentos.getText();
         String nome = this.jTextField_nome.getText();
-        String email = this.jTextField_email.getText();
-                
-        boolean valorDoNomeValido = nome != null && !nome.isBlank(); 
-        boolean valorDoEmailValido = email != null && !email.isBlank();
-        boolean valorTotalRendimentosValido = totalRendimentos != null && !totalRendimentos.isBlank();
-        
-        System.out.println(valorDoNomeValido);
-        System.out.println(valorDoEmailValido);
-        System.out.println(valorTotalRendimentosValido);
-        
-        valorTotalRendimentosValido = valorTotalRendimentosValido && totalRendimentos.matches("[-+]?[0-9]*\\.?[0-9]+");
-        
-        System.out.println(totalRendimentos.matches("[-+]?[0-9]*\\.?[0-9]+"));
-        
-        if(valorDoEmailValido && valorDoNomeValido && valorTotalRendimentosValido){
-           float valorTotalRendimentos = Float.parseFloat(totalRendimentos);
-           
-           Pessoa novaPessoa = Pessoa.create(nome, email, valorTotalRendimentos);
-           
-           if(novaPessoa != null){
-            System.out.println(novaPessoa.toString());               
-           }
-           
+        String email = this.jTextField_email1.getText();
+
+        float total = Float.parseFloat(totalRendimentos);
+        String inputString = nome + ";" + email + ";" + total;
+        System.out.println("Rendimentos");
+        Pessoa novaPessoa = dmPessoa.create(inputString);
+        if (novaPessoa != null) {
+            refreshTable();
         }
+        limparInputs();
+
     }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable_alunos = new javax.swing.JTable();
         jPanel_inputs = new javax.swing.JPanel();
         jTextField_nome = new javax.swing.JTextField();
         jLabel_nome = new javax.swing.JLabel();
         jLabel_email = new javax.swing.JLabel();
-        jTextField_email = new javax.swing.JTextField();
-        jFormattedTextField_totalRendimentos = new javax.swing.JFormattedTextField();
+        jTextField_rendimentos = new javax.swing.JTextField();
         jLabel_totalRendimentos = new javax.swing.JLabel();
         jLabel_codAluno = new javax.swing.JLabel();
         jTextField_codAluno = new javax.swing.JTextField();
+        jTextField_email1 = new javax.swing.JTextField();
         jPanel_acoes = new javax.swing.JPanel();
         jButton_novo = new javax.swing.JButton();
         jButton_editar = new javax.swing.JButton();
         jButton_Excluir = new javax.swing.JButton();
-        jButton_cancelar = new javax.swing.JButton();
+        jButton_atualizar = new javax.swing.JButton();
         jTextField_pesquisar = new javax.swing.JTextField();
         jButton_pesquisar = new javax.swing.JButton();
         jButton_salvar = new javax.swing.JButton();
-        jPanel_tabela = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable_alunos = new javax.swing.JTable();
 
-        setBackground(new java.awt.Color(255, 255, 255));
-        setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(204, 204, 204), new java.awt.Color(153, 153, 153)));
+        setBackground(new java.awt.Color(0, 153, 153));
+        setMinimumSize(new java.awt.Dimension(670, 440));
+        setPreferredSize(new java.awt.Dimension(670, 440));
 
+        jTable_alunos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Código", "Nome", "Email", "Total Rend."
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Float.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        jTable_alunos.setPreferredSize(new java.awt.Dimension(375, 0));
+        jTable_alunos.getTableHeader().setReorderingAllowed(false);
+        jTable_alunos.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jTable_alunosFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTable_alunosFocusLost(evt);
+            }
+        });
+        jTable_alunos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable_alunosMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(jTable_alunos);
+        if (jTable_alunos.getColumnModel().getColumnCount() > 0) {
+            jTable_alunos.getColumnModel().getColumn(0).setResizable(false);
+            jTable_alunos.getColumnModel().getColumn(0).setPreferredWidth(15);
+            jTable_alunos.getColumnModel().getColumn(1).setResizable(false);
+            jTable_alunos.getColumnModel().getColumn(2).setResizable(false);
+            jTable_alunos.getColumnModel().getColumn(3).setResizable(false);
+            jTable_alunos.getColumnModel().getColumn(3).setPreferredWidth(20);
+        }
+
+        jPanel_inputs.setBackground(new java.awt.Color(51, 51, 51));
         jPanel_inputs.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
         jPanel_inputs.add(jTextField_nome, new org.netbeans.lib.awtextra.AbsoluteConstraints(71, 10, 240, 30));
 
@@ -103,10 +144,7 @@ public class Pessoas extends javax.swing.JPanel {
         jLabel_email.setForeground(new java.awt.Color(255, 255, 255));
         jLabel_email.setText("Email: ");
         jPanel_inputs.add(jLabel_email, new org.netbeans.lib.awtextra.AbsoluteConstraints(316, 10, 60, 30));
-        jPanel_inputs.add(jTextField_email, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 10, 220, 30));
-
-        jFormattedTextField_totalRendimentos.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getCurrencyInstance())));
-        jPanel_inputs.add(jFormattedTextField_totalRendimentos, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 50, 160, 30));
+        jPanel_inputs.add(jTextField_rendimentos, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 50, 130, 30));
 
         jLabel_totalRendimentos.setFont(new java.awt.Font("Liberation Sans", 1, 15)); // NOI18N
         jLabel_totalRendimentos.setForeground(new java.awt.Color(255, 255, 255));
@@ -121,6 +159,7 @@ public class Pessoas extends javax.swing.JPanel {
         jTextField_codAluno.setEditable(false);
         jTextField_codAluno.setBackground(new java.awt.Color(70, 73, 75));
         jPanel_inputs.add(jTextField_codAluno, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 50, 130, 30));
+        jPanel_inputs.add(jTextField_email1, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 10, 190, 30));
 
         jButton_novo.setText("Novo");
         jButton_novo.addActionListener(new java.awt.event.ActionListener() {
@@ -134,11 +173,16 @@ public class Pessoas extends javax.swing.JPanel {
 
         jButton_Excluir.setText("Excluir");
         jButton_Excluir.setEnabled(false);
+        jButton_Excluir.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton_ExcluirMouseClicked(evt);
+            }
+        });
 
-        jButton_cancelar.setText("Cancelar");
-        jButton_cancelar.addActionListener(new java.awt.event.ActionListener() {
+        jButton_atualizar.setText("Aualizar");
+        jButton_atualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton_cancelarActionPerformed(evt);
+                jButton_atualizarActionPerformed(evt);
             }
         });
 
@@ -146,6 +190,11 @@ public class Pessoas extends javax.swing.JPanel {
 
         jButton_pesquisar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/src/images/icons8-pesquisar-15.png"))); // NOI18N
         jButton_pesquisar.setToolTipText("Buscar por nome");
+        jButton_pesquisar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton_pesquisarMouseClicked(evt);
+            }
+        });
 
         jButton_salvar.setText("Salvar");
         jButton_salvar.setEnabled(false);
@@ -169,12 +218,12 @@ public class Pessoas extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton_Excluir)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton_cancelar)
+                .addComponent(jButton_atualizar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTextField_pesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton_pesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(77, Short.MAX_VALUE))
         );
         jPanel_acoesLayout.setVerticalGroup(
             jPanel_acoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -184,73 +233,35 @@ public class Pessoas extends javax.swing.JPanel {
                     .addComponent(jButton_novo)
                     .addComponent(jButton_editar)
                     .addComponent(jButton_Excluir)
-                    .addComponent(jButton_cancelar)
+                    .addComponent(jButton_atualizar)
                     .addComponent(jTextField_pesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton_pesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton_salvar))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jTable_alunos.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Código", "Nome", "Email", "Total Rend."
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Float.class
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-        });
-        jTable_alunos.getTableHeader().setReorderingAllowed(false);
-        jScrollPane1.setViewportView(jTable_alunos);
-        if (jTable_alunos.getColumnModel().getColumnCount() > 0) {
-            jTable_alunos.getColumnModel().getColumn(0).setResizable(false);
-            jTable_alunos.getColumnModel().getColumn(0).setPreferredWidth(15);
-            jTable_alunos.getColumnModel().getColumn(1).setResizable(false);
-            jTable_alunos.getColumnModel().getColumn(2).setResizable(false);
-            jTable_alunos.getColumnModel().getColumn(3).setResizable(false);
-            jTable_alunos.getColumnModel().getColumn(3).setPreferredWidth(20);
-        }
-
-        javax.swing.GroupLayout jPanel_tabelaLayout = new javax.swing.GroupLayout(jPanel_tabela);
-        jPanel_tabela.setLayout(jPanel_tabelaLayout);
-        jPanel_tabelaLayout.setHorizontalGroup(
-            jPanel_tabelaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_tabelaLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1)
-                .addContainerGap())
-        );
-        jPanel_tabelaLayout.setVerticalGroup(
-            jPanel_tabelaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel_tabelaLayout.createSequentialGroup()
-                .addGap(5, 5, 5)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 262, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel_inputs, javax.swing.GroupLayout.DEFAULT_SIZE, 611, Short.MAX_VALUE)
-            .addComponent(jPanel_acoes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jPanel_tabela, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(5, 5, 5)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jPanel_inputs, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel_acoes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(5, 5, 5))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(jPanel_inputs, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(4, 4, 4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel_acoes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(4, 4, 4)
-                .addComponent(jPanel_tabela, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 279, Short.MAX_VALUE)
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -259,35 +270,110 @@ public class Pessoas extends javax.swing.JPanel {
     }//GEN-LAST:event_jButton_novoActionPerformed
 
     private void jButton_salvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_salvarActionPerformed
-        handleChangeSalvar();
+        try {
+            handleChangeSalvar();
+        } catch (Exception ex) {
+            Logger.getLogger(Pessoas.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jButton_salvarActionPerformed
 
-    private void jButton_cancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_cancelarActionPerformed
-       setEstadoPadraoBotoes();
-       limparInputs();
-    }//GEN-LAST:event_jButton_cancelarActionPerformed
+    private void jButton_atualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_atualizarActionPerformed
+        refreshTable();
+    }//GEN-LAST:event_jButton_atualizarActionPerformed
+
+    private void jButton_pesquisarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton_pesquisarMouseClicked
+        String id = this.jTextField_pesquisar.getText().trim();
+        try {
+            Pessoa p = search(id);
+            if (p == null) {
+                JOptionPane.showMessageDialog(this, "Não foi encontrado ninguem com o id informado!");
+
+            } else {
+                showResults(p);
+            }
+
+        } catch (Exception ex) {
+            Logger.getLogger(Pessoas.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton_pesquisarMouseClicked
+
+    private void jTable_alunosFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTable_alunosFocusGained
+
+    }//GEN-LAST:event_jTable_alunosFocusGained
+
+    private void jTable_alunosFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTable_alunosFocusLost
+
+    }//GEN-LAST:event_jTable_alunosFocusLost
+
+    private void jButton_ExcluirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton_ExcluirMouseClicked
+        this.jButton_Excluir.setEnabled(!this.jButton_Excluir.isEnabled());
+        this.jButton_editar.setEnabled(!this.jButton_Excluir.isEnabled());
+        int option = JOptionPane.showConfirmDialog(this, "Confirma a exclusão?");
+        if (option == 0) {
+            for (int selectedRow : jTable_alunos.getSelectedRows()) {
+                try {
+                    String a = (String) jTable_alunos.getValueAt(selectedRow, 0);
+                    dmPessoa.delete(a);
+                } catch (Exception ex) {
+                    Logger.getLogger(Pessoas.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            refreshTable();
+            JOptionPane.showMessageDialog(this, "Deletado com sucesso.");
+        }
+    }//GEN-LAST:event_jButton_ExcluirMouseClicked
+
+    private void jTable_alunosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable_alunosMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTable_alunosMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton_Excluir;
-    private javax.swing.JButton jButton_cancelar;
+    private javax.swing.JButton jButton_atualizar;
     private javax.swing.JButton jButton_editar;
     private javax.swing.JButton jButton_novo;
     private javax.swing.JButton jButton_pesquisar;
     private javax.swing.JButton jButton_salvar;
-    private javax.swing.JFormattedTextField jFormattedTextField_totalRendimentos;
     private javax.swing.JLabel jLabel_codAluno;
     private javax.swing.JLabel jLabel_email;
     private javax.swing.JLabel jLabel_nome;
     private javax.swing.JLabel jLabel_totalRendimentos;
     private javax.swing.JPanel jPanel_acoes;
     private javax.swing.JPanel jPanel_inputs;
-    private javax.swing.JPanel jPanel_tabela;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable_alunos;
     private javax.swing.JTextField jTextField_codAluno;
-    private javax.swing.JTextField jTextField_email;
+    private javax.swing.JTextField jTextField_email1;
     private javax.swing.JTextField jTextField_nome;
     private javax.swing.JTextField jTextField_pesquisar;
+    private javax.swing.JTextField jTextField_rendimentos;
     // End of variables declaration//GEN-END:variables
+
+    public void refreshTable() {
+        model.setRowCount(0);
+        try {
+            dmPessoa = new DataManager<>(Pessoa.class.getName(), Constantes.DIRETORIO_FILE + Constantes.NOME_BASE_FILE_USUARIOS);
+            dmPessoa.getDataManagerList().forEach(pessoa -> {
+                model.addRow(pessoa.getValues());
+            });
+        } catch (Exception ex) {
+            Logger.getLogger(Pessoas.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public Pessoa search(String id) throws Exception {
+        String find = dmPessoa.getById(id);
+        Pessoa p = null;
+        System.out.println(find + id);
+        if (find != null) {
+            p = dmPessoa.instantiate(find);
+        }
+        return p;
+    }
+
+    public void showResults(Pessoa p) {
+        model.setRowCount(0);
+        model.addRow(p.getValues());
+    }
 }
