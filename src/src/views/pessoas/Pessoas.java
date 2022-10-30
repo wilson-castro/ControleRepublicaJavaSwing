@@ -29,7 +29,6 @@ public final class Pessoas extends javax.swing.JPanel {
     }
 
     private void limparInputs() {
-        this.jTextField_codAluno.setText(null);
         this.jTextField_rendimentos.setText(null);
         this.jTextField_nome.setText(null);
         this.jTextField_pesquisar.setText(null);
@@ -66,16 +65,12 @@ public final class Pessoas extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable_alunos = new javax.swing.JTable();
         jPanel_inputs = new javax.swing.JPanel();
         jTextField_nome = new javax.swing.JTextField();
         jLabel_nome = new javax.swing.JLabel();
         jLabel_email = new javax.swing.JLabel();
         jTextField_rendimentos = new javax.swing.JTextField();
         jLabel_totalRendimentos = new javax.swing.JLabel();
-        jLabel_codAluno = new javax.swing.JLabel();
-        jTextField_codAluno = new javax.swing.JTextField();
         jTextField_email1 = new javax.swing.JTextField();
         jPanel_acoes = new javax.swing.JPanel();
         jButton_novo = new javax.swing.JButton();
@@ -85,53 +80,17 @@ public final class Pessoas extends javax.swing.JPanel {
         jTextField_pesquisar = new javax.swing.JTextField();
         jButton_pesquisar = new javax.swing.JButton();
         jButton_salvar = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable_alunos = new javax.swing.JTable();
 
-        setBackground(new java.awt.Color(0, 153, 153));
+        setBackground(new java.awt.Color(0, 102, 102));
+        setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(204, 204, 204), new java.awt.Color(153, 153, 153)));
+        setMaximumSize(new java.awt.Dimension(670, 440));
         setMinimumSize(new java.awt.Dimension(670, 440));
-        setPreferredSize(new java.awt.Dimension(670, 440));
-
-        jTable_alunos.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Código", "Nome", "Email", "Total Rend."
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Float.class
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-        });
-        jTable_alunos.setPreferredSize(new java.awt.Dimension(375, 0));
-        jTable_alunos.getTableHeader().setReorderingAllowed(false);
-        jTable_alunos.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                jTable_alunosFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                jTable_alunosFocusLost(evt);
-            }
-        });
-        jTable_alunos.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTable_alunosMouseClicked(evt);
-            }
-        });
-        jScrollPane1.setViewportView(jTable_alunos);
-        if (jTable_alunos.getColumnModel().getColumnCount() > 0) {
-            jTable_alunos.getColumnModel().getColumn(0).setResizable(false);
-            jTable_alunos.getColumnModel().getColumn(0).setPreferredWidth(15);
-            jTable_alunos.getColumnModel().getColumn(1).setResizable(false);
-            jTable_alunos.getColumnModel().getColumn(2).setResizable(false);
-            jTable_alunos.getColumnModel().getColumn(3).setResizable(false);
-            jTable_alunos.getColumnModel().getColumn(3).setPreferredWidth(20);
-        }
 
         jPanel_inputs.setBackground(new java.awt.Color(51, 51, 51));
+        jPanel_inputs.setMinimumSize(new java.awt.Dimension(670, 80));
+        jPanel_inputs.setPreferredSize(new java.awt.Dimension(670, 440));
         jPanel_inputs.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
         jPanel_inputs.add(jTextField_nome, new org.netbeans.lib.awtextra.AbsoluteConstraints(71, 10, 240, 30));
 
@@ -144,22 +103,13 @@ public final class Pessoas extends javax.swing.JPanel {
         jLabel_email.setForeground(new java.awt.Color(255, 255, 255));
         jLabel_email.setText("Email: ");
         jPanel_inputs.add(jLabel_email, new org.netbeans.lib.awtextra.AbsoluteConstraints(316, 10, 60, 30));
-        jPanel_inputs.add(jTextField_rendimentos, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 50, 130, 30));
+        jPanel_inputs.add(jTextField_rendimentos, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 50, 130, 30));
 
         jLabel_totalRendimentos.setFont(new java.awt.Font("Liberation Sans", 1, 15)); // NOI18N
         jLabel_totalRendimentos.setForeground(new java.awt.Color(255, 255, 255));
         jLabel_totalRendimentos.setText("Total de Rendimentos: ");
-        jPanel_inputs.add(jLabel_totalRendimentos, new org.netbeans.lib.awtextra.AbsoluteConstraints(274, 50, 170, 30));
-
-        jLabel_codAluno.setFont(new java.awt.Font("Liberation Sans", 1, 15)); // NOI18N
-        jLabel_codAluno.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel_codAluno.setText("Código do Aluno: ");
-        jPanel_inputs.add(jLabel_codAluno, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 130, 30));
-
-        jTextField_codAluno.setEditable(false);
-        jTextField_codAluno.setBackground(new java.awt.Color(70, 73, 75));
-        jPanel_inputs.add(jTextField_codAluno, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 50, 130, 30));
-        jPanel_inputs.add(jTextField_email1, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 10, 190, 30));
+        jPanel_inputs.add(jLabel_totalRendimentos, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 170, 30));
+        jPanel_inputs.add(jTextField_email1, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 10, 220, 30));
 
         jButton_novo.setText("Novo");
         jButton_novo.addActionListener(new java.awt.event.ActionListener() {
@@ -223,7 +173,7 @@ public final class Pessoas extends javax.swing.JPanel {
                 .addComponent(jTextField_pesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton_pesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(77, Short.MAX_VALUE))
+                .addContainerGap(71, Short.MAX_VALUE))
         );
         jPanel_acoesLayout.setVerticalGroup(
             jPanel_acoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -240,27 +190,78 @@ public final class Pessoas extends javax.swing.JPanel {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        jScrollPane1.setMaximumSize(new java.awt.Dimension(185, 0));
+        jScrollPane1.setMinimumSize(new java.awt.Dimension(185, 0));
+        jScrollPane1.setPreferredSize(new java.awt.Dimension(185, 0));
+
+        jTable_alunos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Código", "Nome", "Email", "Total Rend."
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Float.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        jTable_alunos.setMaximumSize(new java.awt.Dimension(185, 0));
+        jTable_alunos.setMinimumSize(new java.awt.Dimension(185, 0));
+        jTable_alunos.getTableHeader().setReorderingAllowed(false);
+        jTable_alunos.addHierarchyListener(new java.awt.event.HierarchyListener() {
+            public void hierarchyChanged(java.awt.event.HierarchyEvent evt) {
+                jTable_alunosHierarchyChanged(evt);
+            }
+        });
+        jTable_alunos.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jTable_alunosFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTable_alunosFocusLost(evt);
+            }
+        });
+        jTable_alunos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable_alunosMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(jTable_alunos);
+        if (jTable_alunos.getColumnModel().getColumnCount() > 0) {
+            jTable_alunos.getColumnModel().getColumn(0).setResizable(false);
+            jTable_alunos.getColumnModel().getColumn(0).setPreferredWidth(15);
+            jTable_alunos.getColumnModel().getColumn(1).setResizable(false);
+            jTable_alunos.getColumnModel().getColumn(2).setResizable(false);
+            jTable_alunos.getColumnModel().getColumn(3).setResizable(false);
+            jTable_alunos.getColumnModel().getColumn(3).setPreferredWidth(20);
+        }
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(5, 5, 5)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel_inputs, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel_acoes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(5, 5, 5))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel_acoes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel_inputs, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(4, 4, 4)
                 .addComponent(jPanel_inputs, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(6, 6, 6)
                 .addComponent(jPanel_acoes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 279, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -314,18 +315,24 @@ public final class Pessoas extends javax.swing.JPanel {
                 try {
                     String a = (String) jTable_alunos.getValueAt(selectedRow, 0);
                     dmPessoa.delete(a);
+
                 } catch (Exception ex) {
                     Logger.getLogger(Pessoas.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
             refreshTable();
-            JOptionPane.showMessageDialog(this, "Deletado com sucesso.");
+            JOptionPane.showMessageDialog(this, "Deletado com sucesso!");
         }
     }//GEN-LAST:event_jButton_ExcluirMouseClicked
 
     private void jTable_alunosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable_alunosMouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_jTable_alunosMouseClicked
+
+    private void jTable_alunosHierarchyChanged(java.awt.event.HierarchyEvent evt) {//GEN-FIRST:event_jTable_alunosHierarchyChanged
+        this.jButton_Excluir.setEnabled(true);
+        this.jButton_editar.setEnabled(true);
+    }//GEN-LAST:event_jTable_alunosHierarchyChanged
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -335,7 +342,6 @@ public final class Pessoas extends javax.swing.JPanel {
     private javax.swing.JButton jButton_novo;
     private javax.swing.JButton jButton_pesquisar;
     private javax.swing.JButton jButton_salvar;
-    private javax.swing.JLabel jLabel_codAluno;
     private javax.swing.JLabel jLabel_email;
     private javax.swing.JLabel jLabel_nome;
     private javax.swing.JLabel jLabel_totalRendimentos;
@@ -343,7 +349,6 @@ public final class Pessoas extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel_inputs;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable_alunos;
-    private javax.swing.JTextField jTextField_codAluno;
     private javax.swing.JTextField jTextField_email1;
     private javax.swing.JTextField jTextField_nome;
     private javax.swing.JTextField jTextField_pesquisar;
@@ -352,6 +357,9 @@ public final class Pessoas extends javax.swing.JPanel {
 
     public void refreshTable() {
         model.setRowCount(0);
+        for (int i = 0; i < model.getRowCount(); i++) {
+            model.removeRow(i);
+        }
         try {
             dmPessoa = new DataManager<>(Pessoa.class.getName(), Constantes.DIRETORIO_FILE + Constantes.NOME_BASE_FILE_USUARIOS);
             dmPessoa.getDataManagerList().forEach(pessoa -> {

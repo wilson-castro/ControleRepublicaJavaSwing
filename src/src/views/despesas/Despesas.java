@@ -4,14 +4,11 @@
  */
 package src.views.despesas;
 
-import javax.swing.table.DefaultTableModel;
 /**
  *
  * @author wilson
  */
 public class Despesas extends javax.swing.JPanel {
-
-    private DefaultTableModel model = null;
 
     public Despesas() {
         initComponents();
@@ -248,19 +245,19 @@ public class Despesas extends javax.swing.JPanel {
     }//GEN-LAST:event_jButton_novoActionPerformed
 
     private void jButton_ExcluirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton_ExcluirMouseClicked
-       
+
     }//GEN-LAST:event_jButton_ExcluirMouseClicked
 
     private void jButton_atualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_atualizarActionPerformed
-        refreshTable();
+        
     }//GEN-LAST:event_jButton_atualizarActionPerformed
 
     private void jButton_pesquisarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton_pesquisarMouseClicked
-       
+
     }//GEN-LAST:event_jButton_pesquisarMouseClicked
 
     private void jButton_salvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_salvarActionPerformed
- 
+
     }//GEN-LAST:event_jButton_salvarActionPerformed
 
     private void jTable_alunosHierarchyChanged(java.awt.event.HierarchyEvent evt) {//GEN-FIRST:event_jTable_alunosHierarchyChanged
@@ -312,8 +309,4 @@ public class Despesas extends javax.swing.JPanel {
     private javax.swing.JTextField jTextField_rendimentos1;
     // End of variables declaration//GEN-END:variables
 
-    public void refreshTable() {
-        model.setRowCount(0);
-
-    }
 }

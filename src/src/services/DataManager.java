@@ -102,7 +102,7 @@ public class DataManager<T> {
         }
     }
 
-    public String readFile() throws Exception {
+    public final String readFile() throws Exception {
         this.StringData = "";
         Scanner in;
         File data;

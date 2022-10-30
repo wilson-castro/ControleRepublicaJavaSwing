@@ -19,6 +19,10 @@ public class Despesa extends Modal {
     private char prioridade = '#';
     private float valor_despesa = 0f;
 
+    public Despesa(String inputString) {
+        
+    }
+
     public String getNome() {
         return nome;
     }
