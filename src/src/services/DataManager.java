@@ -106,7 +106,7 @@ public class DataManager<T> {
         return array;
     }
 
-    public T createSeparated(String line, String... args) throws Exception {
+    public T createSeparated(String line,String fileName, String... args) throws Exception {
         T item = null;
         long lines = 0;
         LocalDate today = LocalDate.now();
@@ -119,7 +119,7 @@ public class DataManager<T> {
         if (args.length >= 2) {
             yearP = args[1];
         }
-        String newFilePath = Constantes.DIRETORIO_FILE + "despesas_" + monthP + "_" + yearP + ".txt";
+        String newFilePath = Constantes.DIRETORIO_FILE + fileName+"_" + monthP + "_" + yearP + ".txt";
         File file = new File(newFilePath);
         if (file.exists()) {
             this.filePath = newFilePath;

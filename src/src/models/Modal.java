@@ -1,5 +1,6 @@
 package src.models;
 
+import com.google.gson.Gson;
 import java.lang.reflect.Field;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -7,7 +8,8 @@ import java.util.logging.Logger;
 public class Modal {
 
     public String toJson() {
-        return "";
+        Gson gson = new Gson();
+        return gson.toJson(this);
     }
 
     public Object[] getValues() {
@@ -25,7 +27,6 @@ public class Modal {
             }
             count++;
         }
-
         return values;
     }
 }

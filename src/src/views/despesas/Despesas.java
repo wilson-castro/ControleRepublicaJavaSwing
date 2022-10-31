@@ -266,12 +266,12 @@ public class Despesas extends javax.swing.JPanel {
 
     private void jButton_novoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_novoActionPerformed
         try {
-            Despesa novaDespesa = dmDespesa.createSeparated("Carro;LavaJato;Mobilidade;1;10.50", "12");
+            // TODO:
+            Despesa novaDespesa = dmDespesa.createSeparated("Carro;LavaJato;Mobilidade;1;10.50", "despesas", "12");
             Object[] a = novaDespesa.getValues();
-            for (int i = 0; i < a.length; i++) {
-                Object object = a[i];
-                System.out.println(object);
-            }
+            dmDespesa.getDataManagerList().forEach(item -> {
+                System.out.println(item.getValues());
+            });
         } catch (Exception ex) {
             Logger.getLogger(Despesas.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -285,7 +285,7 @@ public class Despesas extends javax.swing.JPanel {
             for (int selectedRow : jTable_despesas.getSelectedRows()) {
                 try {
                     String a = (String) jTable_despesas.getValueAt(selectedRow, 0).toString();
-                    String file = dmDespesa.getFilePath() + "despesas_" + a.substring(0, 2) + "_" + a.substring(2, 6)+".txt";
+                    String file = dmDespesa.getFilePath() + "despesas_" + a.substring(0, 2) + "_" + a.substring(2, 6) + ".txt";
                     dmDespesa.deleteFromFile(a, file);
                 } catch (Exception ex) {
                     Logger.getLogger(Pessoas.class.getName()).log(Level.SEVERE, null, ex);

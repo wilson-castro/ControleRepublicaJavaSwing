@@ -1,6 +1,5 @@
 package src.models;
 
-import com.google.gson.Gson;
 
 public class Pessoa extends Modal {
 
@@ -11,7 +10,6 @@ public class Pessoa extends Modal {
     protected String inputString = "";
 
     public Pessoa(String inputString) {
-        this.inputString = null;
         this.inputString = inputString;
         String[] cells = this.inputString.split(";");
         this.codigo = cells[0];
@@ -63,20 +61,6 @@ public class Pessoa extends Modal {
 
     public void setTotalRendimentos(float totalRendimentos) {
         this.totalRendimentos = totalRendimentos;
-    }
-
-    //    public static Pessoa create(String nome, String email, float totalRendimentos){
-//        if(nome != null && email != null){
-//            String codigo = RandomString.getAlphaNumericString(Constantes.NUMERO_DIGITOS_CODIGOS);
-//            return new Pessoa(codigo,nome, email, totalRendimentos);
-//        }
-//        
-//        return null;
-//    }
-    @Override
-    public String toJson() {
-        Gson gson = new Gson();
-        return gson.toJson(Pessoa.this);
     }
 
 }
