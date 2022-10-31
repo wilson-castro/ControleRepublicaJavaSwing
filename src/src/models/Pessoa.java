@@ -1,15 +1,14 @@
 package src.models;
 
 import com.google.gson.Gson;
-import src.services.Modal;
 
 public class Pessoa extends Modal {
 
-    private String codigo;
-    private String nome;
-    private String email;
-    private float totalRendimentos;
-    private String inputString = "";
+    protected String codigo;
+    protected String nome;
+    protected String email;
+    protected float totalRendimentos;
+    protected String inputString = "";
 
     public Pessoa(String inputString) {
         this.inputString = null;
@@ -80,8 +79,4 @@ public class Pessoa extends Modal {
         return gson.toJson(Pessoa.this);
     }
 
-    public Object[] getValues() {
-        Object[] values = new Object[]{this.getCodigo(),this.getNome(),this.getEmail(),this.getTotalRendimentos()};
-        return values;
-    }
 }

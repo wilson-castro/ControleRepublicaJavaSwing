@@ -4,7 +4,9 @@
  */
 package src.models;
 
-import src.services.Modal;
+import java.lang.reflect.Field;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -12,15 +14,27 @@ import src.services.Modal;
  */
 public class Despesa extends Modal {
 
-    private long codigo = 0;
-    private String nome = null;
-    private String descricao = null;
-    private String categoria = null;
-    private char prioridade = '#';
-    private float valor_despesa = 0f;
+    protected long codigo = 0;
+    protected String nome = null;
+    protected String descricao = null;
+    protected String categoria = null;
+    protected char prioridade = '#';
+    protected float valor_despesa = 0f;
+    protected String inputString = "";
 
     public Despesa(String inputString) {
-        
+        this.inputString = inputString;
+        String[] cells = this.inputString.split(";");
+        this.codigo = Long.parseLong(cells[0]);
+        this.nome = cells[1];
+        this.descricao = cells[2];
+        this.categoria = cells[3];
+        this.prioridade = cells[4].charAt(0);
+        this.valor_despesa = Float.parseFloat(cells[5]);
+    }
+
+    public long getCodigo() {
+        return codigo;
     }
 
     public String getNome() {

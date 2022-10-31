@@ -4,14 +4,38 @@
  */
 package src.views.despesas;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import src.services.DataManager;
+import src.models.Despesa;
+import src.utils.Constantes;
+import src.views.pessoas.Pessoas;
+
 /**
  *
  * @author wilson
  */
 public class Despesas extends javax.swing.JPanel {
 
+    private DefaultTableModel model = null;
+    DataManager<Despesa> dmDespesa = null;
+
+    public final void initDataManager() {
+        try {
+            dmDespesa = new DataManager<>(Despesa.class.getName(), Constantes.DIRETORIO_FILE, true, "despesas");
+        } catch (Exception e) {
+            System.out.println("Erro ao iniciar o data manager!" + e.getMessage());
+        }
+
+    }
+
     public Despesas() {
         initComponents();
+        initDataManager();
+        this.model = (DefaultTableModel) jTable_despesas.getModel();
+        refreshTable();
     }
 
     /**
@@ -24,7 +48,7 @@ public class Despesas extends javax.swing.JPanel {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable_alunos = new javax.swing.JTable();
+        jTable_despesas = new javax.swing.JTable();
         jPanel_inputs = new javax.swing.JPanel();
         jTextField_nome = new javax.swing.JTextField();
         jLabel_nome = new javax.swing.JLabel();
@@ -50,42 +74,42 @@ public class Despesas extends javax.swing.JPanel {
         setMinimumSize(new java.awt.Dimension(670, 440));
         setPreferredSize(new java.awt.Dimension(670, 440));
 
-        jTable_alunos.setModel(new javax.swing.table.DefaultTableModel(
+        jTable_despesas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Nome", "Descrição", "Categoria", "Prioridade", "Valor"
+                "Codigo", "Nome", "Descrição", "Categoria", "Prioridade", "Valor"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Float.class
+                java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Float.class
             };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
             }
         });
-        jTable_alunos.getTableHeader().setReorderingAllowed(false);
-        jTable_alunos.addHierarchyListener(new java.awt.event.HierarchyListener() {
+        jTable_despesas.getTableHeader().setReorderingAllowed(false);
+        jTable_despesas.addHierarchyListener(new java.awt.event.HierarchyListener() {
             public void hierarchyChanged(java.awt.event.HierarchyEvent evt) {
-                jTable_alunosHierarchyChanged(evt);
+                jTable_despesasHierarchyChanged(evt);
             }
         });
-        jTable_alunos.addFocusListener(new java.awt.event.FocusAdapter() {
+        jTable_despesas.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                jTable_alunosFocusGained(evt);
+                jTable_despesasFocusGained(evt);
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
-                jTable_alunosFocusLost(evt);
+                jTable_despesasFocusLost(evt);
             }
         });
-        jTable_alunos.addMouseListener(new java.awt.event.MouseAdapter() {
+        jTable_despesas.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTable_alunosMouseClicked(evt);
+                jTable_despesasMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(jTable_alunos);
+        jScrollPane1.setViewportView(jTable_despesas);
 
         jPanel_inputs.setBackground(new java.awt.Color(51, 51, 51));
         jPanel_inputs.setMinimumSize(new java.awt.Dimension(670, 80));
@@ -241,40 +265,78 @@ public class Despesas extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton_novoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_novoActionPerformed
+        try {
+            Despesa novaDespesa = dmDespesa.createSeparated("Carro;LavaJato;Mobilidade;1;10.50", "12");
+            Object[] a = novaDespesa.getValues();
+            for (int i = 0; i < a.length; i++) {
+                Object object = a[i];
+                System.out.println(object);
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(Despesas.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
     }//GEN-LAST:event_jButton_novoActionPerformed
 
     private void jButton_ExcluirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton_ExcluirMouseClicked
 
+        int option = JOptionPane.showConfirmDialog(this, "Confirma a exclusão?");
+        if (option == 0) {
+            for (int selectedRow : jTable_despesas.getSelectedRows()) {
+                try {
+                    String a = (String) jTable_despesas.getValueAt(selectedRow, 0).toString();
+                    String file = dmDespesa.getFilePath() + "despesas_" + a.substring(0, 2) + "_" + a.substring(2, 6)+".txt";
+                    dmDespesa.deleteFromFile(a, file);
+                } catch (Exception ex) {
+                    Logger.getLogger(Pessoas.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            refreshTable();
+            JOptionPane.showMessageDialog(this, "Deletado com sucesso!");
+        }
     }//GEN-LAST:event_jButton_ExcluirMouseClicked
 
     private void jButton_atualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_atualizarActionPerformed
-        
+        refreshTable();
     }//GEN-LAST:event_jButton_atualizarActionPerformed
 
     private void jButton_pesquisarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton_pesquisarMouseClicked
+        String id = this.jTextField_pesquisar.getText().trim();
+        try {
+            Despesa p = search(id);
+            if (p == null) {
+                JOptionPane.showMessageDialog(this, "Não foi encontrado ninguem com o id informado!");
 
+            } else {
+                showResults(p);
+            }
+
+        } catch (Exception ex) {
+            Logger.getLogger(Pessoas.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jButton_pesquisarMouseClicked
 
     private void jButton_salvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_salvarActionPerformed
 
     }//GEN-LAST:event_jButton_salvarActionPerformed
 
-    private void jTable_alunosHierarchyChanged(java.awt.event.HierarchyEvent evt) {//GEN-FIRST:event_jTable_alunosHierarchyChanged
+    private void jTable_despesasHierarchyChanged(java.awt.event.HierarchyEvent evt) {//GEN-FIRST:event_jTable_despesasHierarchyChanged
 
-    }//GEN-LAST:event_jTable_alunosHierarchyChanged
+    }//GEN-LAST:event_jTable_despesasHierarchyChanged
 
-    private void jTable_alunosFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTable_alunosFocusGained
+    private void jTable_despesasFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTable_despesasFocusGained
+        this.jButton_Excluir.setEnabled(true);
+        this.jButton_editar.setEnabled(true);
+    }//GEN-LAST:event_jTable_despesasFocusGained
 
-    }//GEN-LAST:event_jTable_alunosFocusGained
+    private void jTable_despesasFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTable_despesasFocusLost
+        this.jButton_Excluir.setEnabled(false);
+        this.jButton_editar.setEnabled(false);
+    }//GEN-LAST:event_jTable_despesasFocusLost
 
-    private void jTable_alunosFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTable_alunosFocusLost
-
-    }//GEN-LAST:event_jTable_alunosFocusLost
-
-    private void jTable_alunosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable_alunosMouseClicked
+    private void jTable_despesasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable_despesasMouseClicked
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTable_alunosMouseClicked
+    }//GEN-LAST:event_jTable_despesasMouseClicked
 
     private void jTextField_rendimentosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_rendimentosActionPerformed
         // TODO add your handling code here:
@@ -300,7 +362,7 @@ public class Despesas extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel_acoes;
     private javax.swing.JPanel jPanel_inputs;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable_alunos;
+    private javax.swing.JTable jTable_despesas;
     private javax.swing.JTextField jTextField_codAluno;
     private javax.swing.JTextField jTextField_email1;
     private javax.swing.JTextField jTextField_nome;
@@ -308,5 +370,30 @@ public class Despesas extends javax.swing.JPanel {
     private javax.swing.JTextField jTextField_rendimentos;
     private javax.swing.JTextField jTextField_rendimentos1;
     // End of variables declaration//GEN-END:variables
+    public void refreshTable() {
+        model.setRowCount(0);
+        try {
+            dmDespesa = new DataManager<>(Despesa.class.getName(), Constantes.DIRETORIO_FILE, true, "despesas");
+            dmDespesa.getDataManagerList().forEach(despesa -> {
+                model.addRow(despesa.getValues());
+            });
+        } catch (Exception ex) {
+            Logger.getLogger(Pessoas.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
+    public Despesa search(String id) throws Exception {
+        String find = dmDespesa.getById(id);
+        Despesa p = null;
+        System.out.println(find + id);
+        if (find != null) {
+            p = dmDespesa.instantiate(find);
+        }
+        return p;
+    }
+
+    public void showResults(Despesa p) {
+        model.setRowCount(0);
+        model.addRow(p.getValues());
+    }
 }
