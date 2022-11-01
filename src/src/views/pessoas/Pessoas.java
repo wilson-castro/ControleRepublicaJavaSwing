@@ -33,6 +33,7 @@ public final class Pessoas extends javax.swing.JPanel {
         this.jTextField_nome.setText(null);
         this.jTextField_pesquisar.setText(null);
         this.jTextField_rendimentos.setText(null);
+        this.jTextField_email1.setText(null);
     }
 
     private void handleChangeNovo() {
@@ -49,16 +50,33 @@ public final class Pessoas extends javax.swing.JPanel {
         String totalRendimentos = this.jTextField_rendimentos.getText();
         String nome = this.jTextField_nome.getText();
         String email = this.jTextField_email1.getText();
-
-        float total = Float.parseFloat(totalRendimentos);
-        String inputString = nome + ";" + email + ";" + total;
-        System.out.println("Rendimentos");
-        Pessoa novaPessoa = dmPessoa.create(inputString);
-        if (novaPessoa != null) {
-            refreshTable();
+        float total = 0;
+        
+        boolean totalRendimentosValido = totalRendimentos != null && !totalRendimentos.isBlank();
+        
+        if(totalRendimentosValido) {
+            try {
+                total = Float.parseFloat(totalRendimentos);
+            }catch (NumberFormatException nfe) {
+                System.out.println("Total de Rendimentos inválido! "+nfe.getMessage());
+                totalRendimentosValido =  false;
+            }
         }
-        limparInputs();
+        
+        if( (nome != null && !nome.isBlank()) 
+            && (email !=null && !email.isBlank()) 
+            && totalRendimentosValido) {
+         
+            String inputString = nome + ";" + email + ";" + total;
+            Pessoa novaPessoa = dmPessoa.create(inputString);
 
+            if (novaPessoa != null) refreshTable();
+
+            setEstadoPadraoBotoes();
+            limparInputs();   
+        } else {
+            JOptionPane.showMessageDialog(null, "Preencha todos os campos corretamente!");
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -173,7 +191,7 @@ public final class Pessoas extends javax.swing.JPanel {
                 .addComponent(jTextField_pesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton_pesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(71, Short.MAX_VALUE))
+                .addContainerGap(59, Short.MAX_VALUE))
         );
         jPanel_acoesLayout.setVerticalGroup(
             jPanel_acoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -213,22 +231,12 @@ public final class Pessoas extends javax.swing.JPanel {
         jTable_alunos.setMaximumSize(new java.awt.Dimension(185, 0));
         jTable_alunos.setMinimumSize(new java.awt.Dimension(185, 0));
         jTable_alunos.getTableHeader().setReorderingAllowed(false);
-        jTable_alunos.addHierarchyListener(new java.awt.event.HierarchyListener() {
-            public void hierarchyChanged(java.awt.event.HierarchyEvent evt) {
-                jTable_alunosHierarchyChanged(evt);
-            }
-        });
         jTable_alunos.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 jTable_alunosFocusGained(evt);
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
                 jTable_alunosFocusLost(evt);
-            }
-        });
-        jTable_alunos.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTable_alunosMouseClicked(evt);
             }
         });
         jScrollPane1.setViewportView(jTable_alunos);
@@ -298,14 +306,6 @@ public final class Pessoas extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_jButton_pesquisarMouseClicked
 
-    private void jTable_alunosFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTable_alunosFocusGained
-
-    }//GEN-LAST:event_jTable_alunosFocusGained
-
-    private void jTable_alunosFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTable_alunosFocusLost
-
-    }//GEN-LAST:event_jTable_alunosFocusLost
-
     private void jButton_ExcluirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton_ExcluirMouseClicked
         this.jButton_Excluir.setEnabled(!this.jButton_Excluir.isEnabled());
         this.jButton_editar.setEnabled(!this.jButton_Excluir.isEnabled());
@@ -325,14 +325,15 @@ public final class Pessoas extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_jButton_ExcluirMouseClicked
 
-    private void jTable_alunosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable_alunosMouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTable_alunosMouseClicked
-
-    private void jTable_alunosHierarchyChanged(java.awt.event.HierarchyEvent evt) {//GEN-FIRST:event_jTable_alunosHierarchyChanged
+    private void jTable_alunosFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTable_alunosFocusGained
         this.jButton_Excluir.setEnabled(true);
         this.jButton_editar.setEnabled(true);
-    }//GEN-LAST:event_jTable_alunosHierarchyChanged
+    }//GEN-LAST:event_jTable_alunosFocusGained
+
+    private void jTable_alunosFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTable_alunosFocusLost
+        this.jButton_Excluir.setEnabled(false);
+        this.jButton_editar.setEnabled(false);
+    }//GEN-LAST:event_jTable_alunosFocusLost
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

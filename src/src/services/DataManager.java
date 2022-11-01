@@ -242,6 +242,9 @@ public class DataManager<T> {
 
         while (in.hasNextLine()) {
             String line = in.nextLine();
+            
+            if(line.isBlank()) continue;
+            
             this.StringData += line + "\n";
             String[] cells = line.split(";");
             if (line != null) {
@@ -269,6 +272,9 @@ public class DataManager<T> {
 
         while (in.hasNextLine()) {
             String line = in.nextLine();
+
+            if(line.isBlank()) continue;
+
             this.StringData += line + "\n";
             String[] cells = line.split(";");
             if (line != null) {
