@@ -1,11 +1,12 @@
-
 package src;
 
 
+
 public class Main {
+
     public static void main(String[] args) {
-        String aux = "\n" +
-        "";
-        System.out.println(aux.isBlank());
+        int num = 12;
+        String a = String.format("%02d", num);
+        System.out.println(a);
     }
 }

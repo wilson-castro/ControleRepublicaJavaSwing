@@ -1,5 +1,9 @@
 1;a;a;22.0
-3;aux;saeesa;222.0
---3;fdsfsdf;fasdfdsa;22.0
---4;fsdfsa;fasfsa;22.0
-5;gdgdfs;gsgsdgsdg;44.0
+2;aux;saeesa;222.0
+3;fdsfsdf;fasdfdsa;22.0
+4;fsdfsa;fasfsa;22.0
+--5;gdgdfs;gsgsdgsdg;44.0
+--6;tews;teste;22.0
+--7;testeee;222;222.0
+8;testeee;aaaa;222.0
+9;testeeee;aaa;222.0

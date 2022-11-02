@@ -106,24 +106,24 @@ public class DataManager<T> {
         return array;
     }
 
-    public T createSeparated(String line,String fileName, String... args) throws Exception {
+    public T createSeparated(String line, String fileName, String... args) throws Exception {
         T item = null;
         long lines = 0;
         LocalDate today = LocalDate.now();
-        String monthP = today.getMonthValue() + "";
+        String monthP = String.format("%02d", today.getMonthValue());
         String yearP = today.getYear() + "";
-
         if (args.length >= 1) {
-            monthP = args[0];
+            monthP = String.format("%02d", Integer.valueOf(args[0]));
         }
         if (args.length >= 2) {
             yearP = args[1];
         }
-        String newFilePath = Constantes.DIRETORIO_FILE + fileName+"_" + monthP + "_" + yearP + ".txt";
+        String newFilePath = Constantes.DIRETORIO_FILE + fileName + "_" + monthP + "_" + yearP + ".txt";
         File file = new File(newFilePath);
+        String idPrefix = monthP + yearP;
         if (file.exists()) {
             this.filePath = newFilePath;
-            return create(line, monthP + yearP);
+            return create(line, idPrefix);
         }
         try {
             OutputStreamWriter output = new OutputStreamWriter(new FileOutputStream(newFilePath, true), StandardCharsets.UTF_8);
@@ -135,7 +135,8 @@ public class DataManager<T> {
             String newLine;
             try ( Writer writer = new BufferedWriter(output)) {
                 lines = lines + 1;
-                newLine = lines + ";" + line;
+                String id = idPrefix + lines;
+                newLine = id + ";" + line;
                 writer.write(newLine);
             }
             item = instantiate(newLine);
@@ -157,7 +158,8 @@ public class DataManager<T> {
             Writer writer = new BufferedWriter(output);
             lines = lines + 1;
             String newLine = lines + ";" + line;
-            writer.write("\n" + newLine);
+            writer.write("\n");
+            writer.write(newLine);
             writer.close();
             item = instantiate(newLine);
             this.DataManagerList.add(item);
@@ -175,11 +177,14 @@ public class DataManager<T> {
         lines = Files.lines(path).count();
         try {
             OutputStreamWriter output = new OutputStreamWriter(new FileOutputStream(this.filePath, true), StandardCharsets.UTF_8);
-            Writer writer = new BufferedWriter(output);
-            lines = lines + 1;
-            String newLine = idPrefix + lines + ";" + line;
-            writer.write("\n" + newLine);
-            writer.close();
+            String newLine;
+            try ( Writer writer = new BufferedWriter(output)) {
+                lines = lines + 1;
+                String id = idPrefix + lines;
+                newLine = id + ";" + line;
+                writer.write("\n");
+                writer.write(newLine);
+            }
             item = instantiate(newLine);
             this.DataManagerList.add(item);
             System.out.println("Criado com sucesso!");
@@ -199,7 +204,8 @@ public class DataManager<T> {
         try {
             new PrintWriter(file).close(); // Deleta o conteudo do arquivo
             try ( OutputStreamWriter output = new OutputStreamWriter(new FileOutputStream(file, true), StandardCharsets.UTF_8);  Writer writer = new BufferedWriter(output)) {
-                writer.write(data);
+                writer.write(data.trim());
+                writer.close();
             }
             System.out.println("Deletado com sucesso!");
             return true;
@@ -217,20 +223,21 @@ public class DataManager<T> {
         data = data.replace(user, "--" + user);
         try {
             new PrintWriter(this.filePath).close(); // Deleta o conteudo do arquivo
-            OutputStreamWriter output = new OutputStreamWriter(new FileOutputStream(this.filePath, true), StandardCharsets.UTF_8);
-            Writer writer = new BufferedWriter(output);
-            writer.write(data);
-            writer.close();
-            output.close();
+            try ( OutputStreamWriter output = new OutputStreamWriter(new FileOutputStream(this.filePath, true), StandardCharsets.UTF_8)) {
+                Writer writer = new BufferedWriter(output);
+                writer.write(data.trim());
+                writer.close();
+            }
             System.out.println("Deletado com sucesso!");
             return true;
-        } catch (Exception e) {
+        } catch (IOException e) {
             throw new Exception("Arquivo não encontrado");
         }
     }
 
     public final String readFile() throws Exception {
         this.StringData = "";
+        deleteFromFileBlankOrEmptyLines(filePath);
         Scanner in;
         File data;
         try {
@@ -240,29 +247,31 @@ public class DataManager<T> {
             throw new FileNotFoundException("Arquivo: \"" + filePath + "\". não foi encontrado");
         }
 
-        while (in.hasNextLine()) {
+        while (in.hasNext()) {
             String line = in.nextLine();
-            
-            if(line.isBlank()) continue;
-            
-            this.StringData += line + "\n";
-            String[] cells = line.split(";");
-            if (line != null) {
 
-                if (line.charAt(0) != '-') {
-                    T item = instantiate(line);
-                    DataManagerList.add(item);
-                }
+            if (line.isBlank() || line.isEmpty()) {
+
+                continue;
+            }
+
+            this.StringData += line + "\n";
+            if (line.charAt(0) != '-') {
+                T item = instantiate(line);
+                DataManagerList.add(item);
             }
 
         }
+        in.close();
         return this.StringData;
     }
 
     public final String readFile(String path) throws Exception {
         this.StringData = "";
+        deleteFromFileBlankOrEmptyLines(path);
         Scanner in;
         File data;
+
         try {
             data = new File(path);
             in = new Scanner(data);
@@ -270,22 +279,59 @@ public class DataManager<T> {
             throw new FileNotFoundException("Arquivo: \"" + path + "\". não foi encontrado");
         }
 
-        while (in.hasNextLine()) {
-            String line = in.nextLine();
+        while (in.hasNext()) {
+            String line = in.nextLine().trim();
 
-            if(line.isBlank()) continue;
+            if (line.isBlank() || line.isEmpty()) {
 
-            this.StringData += line + "\n";
-            String[] cells = line.split(";");
-            if (line != null) {
-
-                if (line.charAt(0) != '-') {
-                    T item = instantiate(line);
-                    DataManagerList.add(item);
-                }
+                continue;
             }
 
+            this.StringData += line + "\n";
+
+            if (line.charAt(0) != '-') {
+                T item = instantiate(line);
+                DataManagerList.add(item);
+            }
         }
+        in.close();
         return this.StringData;
+    }
+
+    private String readFileWithBlankOrEmptyLine(String path) throws Exception {
+        String stringData = "";
+        Scanner in;
+        File data;
+
+        try {
+            data = new File(path);
+            in = new Scanner(data);
+        } catch (FileNotFoundException e) {
+            throw new FileNotFoundException("Arquivo: \"" + path + "\". não foi encontrado");
+        }
+
+        while (in.hasNext()) {
+            String line = in.nextLine();
+            stringData += line + "\n";
+
+        }
+        in.close();
+        return stringData;
+    }
+
+    private boolean deleteFromFileBlankOrEmptyLines(String file) throws Exception {
+        String data = readFileWithBlankOrEmptyLine(file);
+        Pattern regex = Pattern.compile("^(?:[\\t ]*(?:\\r?\\n|\\r))+", Pattern.MULTILINE);
+        data = regex.matcher(data).replaceAll("");
+        try {
+            new PrintWriter(file).close(); // Deleta o conteudo do arquivo
+            try ( OutputStreamWriter output = new OutputStreamWriter(new FileOutputStream(file, true), StandardCharsets.UTF_8);  Writer writer = new BufferedWriter(output)) {
+                writer.write(data.trim());
+                writer.close();
+            }
+            return true;
+        } catch (IOException e) {
+            throw new Exception("Arquivo não encontrado");
+        }
     }
 }

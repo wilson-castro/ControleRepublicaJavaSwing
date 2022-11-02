@@ -1,12 +1,10 @@
-
 package src.models;
 
 import src.utils.Constantes;
 
-
 public class Despesa extends Modal {
 
-    protected long codigo = 0;
+    protected String codigo = null;
     protected String nome = null;
     protected String descricao = null;
     protected String categoria = null;
@@ -17,7 +15,7 @@ public class Despesa extends Modal {
     public Despesa(String inputString) {
         this.inputString = inputString;
         String[] cells = this.inputString.split(";");
-        this.codigo = Long.parseLong(cells[0]);
+        this.codigo = cells[0];
         this.nome = cells[1];
         this.descricao = cells[2];
         this.categoria = cells[3];
@@ -25,7 +23,7 @@ public class Despesa extends Modal {
         this.valor_despesa = Float.parseFloat(cells[5]);
     }
 
-    public long getCodigo() {
+    public String getCodigo() {
         return codigo;
     }
 
