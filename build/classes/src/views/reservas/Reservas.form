@@ -150,10 +150,8 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jButton_novo" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jButton_editar" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
                   <Component id="jButton_Excluir" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="84" max="-2" attributes="0"/>
                   <Component id="jButton_atualizar" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jTextField_pesquisar" min="-2" pref="143" max="-2" attributes="0"/>
@@ -169,7 +167,6 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jButton_novo" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jButton_editar" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jButton_Excluir" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jButton_atualizar" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jTextField_pesquisar" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -189,12 +186,6 @@
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton_novoActionPerformed"/>
           </Events>
-        </Component>
-        <Component class="javax.swing.JButton" name="jButton_editar">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Editar"/>
-            <Property name="enabled" type="boolean" value="false"/>
-          </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="jButton_Excluir">
           <Properties>

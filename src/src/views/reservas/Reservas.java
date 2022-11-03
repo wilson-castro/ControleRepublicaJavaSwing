@@ -49,7 +49,6 @@ public class Reservas extends javax.swing.JPanel {
         
     private void setEstadoPadraoBotoes() {
         this.jButton_salvar.setEnabled(false);
-        this.jButton_editar.setEnabled(false);
         this.jButton_Excluir.setEnabled(false);
 
         this.jButton_novo.setEnabled(true);
@@ -145,7 +144,6 @@ public class Reservas extends javax.swing.JPanel {
         jLabel_rendimetno = new javax.swing.JLabel();
         jPanel_acoes = new javax.swing.JPanel();
         jButton_novo = new javax.swing.JButton();
-        jButton_editar = new javax.swing.JButton();
         jButton_Excluir = new javax.swing.JButton();
         jButton_atualizar = new javax.swing.JButton();
         jTextField_pesquisar = new javax.swing.JTextField();
@@ -191,9 +189,6 @@ public class Reservas extends javax.swing.JPanel {
             }
         });
 
-        jButton_editar.setText("Editar");
-        jButton_editar.setEnabled(false);
-
         jButton_Excluir.setText("Excluir");
         jButton_Excluir.setEnabled(false);
         jButton_Excluir.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -237,10 +232,8 @@ public class Reservas extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton_novo)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton_editar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton_Excluir)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(84, 84, 84)
                 .addComponent(jButton_atualizar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTextField_pesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -254,7 +247,6 @@ public class Reservas extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(jPanel_acoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton_novo)
-                    .addComponent(jButton_editar)
                     .addComponent(jButton_Excluir)
                     .addComponent(jButton_atualizar)
                     .addComponent(jTextField_pesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -324,24 +316,6 @@ public class Reservas extends javax.swing.JPanel {
         handleChangeNovo();
     }//GEN-LAST:event_jButton_novoActionPerformed
 
-    private void jButton_ExcluirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton_ExcluirMouseClicked
-        int option = JOptionPane.showConfirmDialog(this, "Confirma a exclusão?");
-        if (option == 0) {
-            for (int selectedRow : jTable_reservas.getSelectedRows()) {
-                try {
-                    String a = (String) jTable_reservas.getValueAt(selectedRow, 0).toString();
-                    String file = dmReservas.getFilePath() + getFilterDataManager() + ".txt";
-                    dmReservas.deleteFromFile(a, file);
-                } catch (Exception ex) {
-                    Logger.getLogger(Reservas.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-            refreshTable();
-            refreshJComboBoxPessoas();
-            JOptionPane.showMessageDialog(this, "Deletado com sucesso!");
-        }
-    }//GEN-LAST:event_jButton_ExcluirMouseClicked
-
     private void jButton_atualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_atualizarActionPerformed
         refreshTable();
     }//GEN-LAST:event_jButton_atualizarActionPerformed
@@ -372,12 +346,10 @@ public class Reservas extends javax.swing.JPanel {
 
     private void jTable_reservasFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTable_reservasFocusGained
         this.jButton_Excluir.setEnabled(true);
-        this.jButton_editar.setEnabled(true);
     }//GEN-LAST:event_jTable_reservasFocusGained
 
     private void jTable_reservasFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTable_reservasFocusLost
         this.jButton_Excluir.setEnabled(false);
-        this.jButton_editar.setEnabled(false);
     }//GEN-LAST:event_jTable_reservasFocusLost
 
     private void jComboBox_pessoasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox_pessoasActionPerformed
@@ -388,10 +360,27 @@ public class Reservas extends javax.swing.JPanel {
        }
     }//GEN-LAST:event_jComboBox_pessoasActionPerformed
 
+    private void jButton_ExcluirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton_ExcluirMouseClicked
+        int option = JOptionPane.showConfirmDialog(this, "Confirma a exclusão?");
+        if (option == 0) {
+            for (int selectedRow : jTable_reservas.getSelectedRows()) {
+                try {
+                    String a = (String) jTable_reservas.getValueAt(selectedRow, 0).toString();
+                    String file = dmReservas.getFilePath() + getFilterDataManager() + ".txt";
+                    dmReservas.deleteFromFile(a, file);
+                } catch (Exception ex) {
+                    Logger.getLogger(Reservas.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            refreshTable();
+            refreshJComboBoxPessoas();
+            JOptionPane.showMessageDialog(this, "Deletado com sucesso!");
+        }
+    }//GEN-LAST:event_jButton_ExcluirMouseClicked
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton_Excluir;
     private javax.swing.JButton jButton_atualizar;
-    private javax.swing.JButton jButton_editar;
     private javax.swing.JButton jButton_novo;
     private javax.swing.JButton jButton_pesquisar;
     private javax.swing.JButton jButton_salvar;

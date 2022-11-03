@@ -1,4 +1,4 @@
---1120221;Carro;LavaJato;Mobilidade;1;10.50
---1120222;safsdfas;sdfasdf;Variada;3;22.0
---1120223;fasfa;232;Fixa;#;32.0
---1120224;dsaas;sadsadas;Variada;1;22.0
+1120221;Carro;LavaJato;Mobilidade;1;10.50
+1120222;safsdfas;sdfasdf;Variada;3;22.0
+1120223;fasfa;232;Fixa;#;32.0
+1120224;dsaas;sadsadas;Variada;1;22.0

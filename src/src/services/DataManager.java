@@ -334,4 +334,26 @@ public class DataManager<T> {
             throw new Exception("Arquivo não encontrado");
         }
     }
+    
+    public boolean update(String id, String updatedLine) throws Exception {
+        String data = readFile();
+        String user = getById(id);
+        if (user == null) {
+            throw new Exception("Registro não existe!");
+        }
+        data = data.replace(user, id+";"+updatedLine);
+        try {
+            new PrintWriter(this.filePath).close(); 
+            try ( OutputStreamWriter output = new OutputStreamWriter(new FileOutputStream(this.filePath, true), StandardCharsets.UTF_8)) {
+                Writer writer = new BufferedWriter(output);
+                writer.write(data.trim());
+                writer.close();
+            }
+            System.out.println("Atualizado com sucesso!");
+            return true;
+        } catch (IOException e) {
+            throw new Exception("Arquivo não encontrado");
+        }
+    }
+
 }

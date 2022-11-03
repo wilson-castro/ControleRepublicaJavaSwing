@@ -12,6 +12,8 @@ public final class Pessoas extends javax.swing.JPanel {
 
     private DefaultTableModel model = null;
     DataManager<Pessoa> dmPessoa;
+    
+    private String idEdicao = null;
 
     public Pessoas() {
         initComponents();
@@ -29,6 +31,7 @@ public final class Pessoas extends javax.swing.JPanel {
     }
 
     private void limparInputs() {
+        this.idEdicao = null;
         this.jTextField_rendimentos.setText(null);
         this.jTextField_nome.setText(null);
         this.jTextField_pesquisar.setText(null);
@@ -68,9 +71,15 @@ public final class Pessoas extends javax.swing.JPanel {
             && totalRendimentosValido) {
          
             String inputString = nome + ";" + email + ";" + total;
-            Pessoa novaPessoa = dmPessoa.create(inputString);
-
-            if (novaPessoa != null) refreshTable();
+            
+            if(idEdicao != null){
+                dmPessoa.update(idEdicao, inputString);
+                refreshTable();
+            } else {
+                Pessoa novaPessoa = dmPessoa.create(inputString);
+                            
+                if (novaPessoa != null) refreshTable();
+            }
 
             setEstadoPadraoBotoes();
             limparInputs();   
@@ -102,7 +111,6 @@ public final class Pessoas extends javax.swing.JPanel {
         jTable_alunos = new javax.swing.JTable();
 
         setBackground(new java.awt.Color(0, 102, 102));
-        setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(204, 204, 204), new java.awt.Color(153, 153, 153)));
         setMaximumSize(new java.awt.Dimension(670, 440));
         setMinimumSize(new java.awt.Dimension(670, 440));
 
@@ -138,6 +146,11 @@ public final class Pessoas extends javax.swing.JPanel {
 
         jButton_editar.setText("Editar");
         jButton_editar.setEnabled(false);
+        jButton_editar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton_editarMouseClicked(evt);
+            }
+        });
 
         jButton_Excluir.setText("Excluir");
         jButton_Excluir.setEnabled(false);
@@ -191,7 +204,7 @@ public final class Pessoas extends javax.swing.JPanel {
                 .addComponent(jTextField_pesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton_pesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(59, Short.MAX_VALUE))
+                .addContainerGap(63, Short.MAX_VALUE))
         );
         jPanel_acoesLayout.setVerticalGroup(
             jPanel_acoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -268,8 +281,8 @@ public final class Pessoas extends javax.swing.JPanel {
                 .addComponent(jPanel_inputs, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(6, 6, 6)
                 .addComponent(jPanel_acoes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 287, Short.MAX_VALUE)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -326,14 +339,40 @@ public final class Pessoas extends javax.swing.JPanel {
     }//GEN-LAST:event_jButton_ExcluirMouseClicked
 
     private void jTable_alunosFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTable_alunosFocusGained
-        this.jButton_Excluir.setEnabled(true);
-        this.jButton_editar.setEnabled(true);
+        if(this.idEdicao == null ) {
+            this.jButton_Excluir.setEnabled(true);
+            this.jButton_editar.setEnabled(true);
+        }
     }//GEN-LAST:event_jTable_alunosFocusGained
 
     private void jTable_alunosFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTable_alunosFocusLost
         this.jButton_Excluir.setEnabled(false);
         this.jButton_editar.setEnabled(false);
     }//GEN-LAST:event_jTable_alunosFocusLost
+
+    private void jButton_editarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton_editarMouseClicked
+        if(jTable_alunos.getSelectedRows().length > 0 && idEdicao == null) {
+            this.jButton_Excluir.setEnabled(false);
+            this.jButton_editar.setEnabled(false);
+
+            int firstSelectedRow = jTable_alunos.getSelectedRows()[0];
+
+            try {
+                
+                idEdicao = (String) jTable_alunos.getValueAt(firstSelectedRow, 0);
+                
+                this.jTextField_nome.setText((String) jTable_alunos.getValueAt(firstSelectedRow, 1));
+                this.jTextField_rendimentos.setText((String) jTable_alunos.getValueAt(firstSelectedRow, 3).toString());
+                this.jTextField_email1.setText((String) jTable_alunos.getValueAt(firstSelectedRow, 2));
+                
+                this.jButton_salvar.setEnabled(true);
+                
+            } catch (NumberFormatException nex) {
+                Logger.getLogger(Pessoas.class.getName()).log(Level.SEVERE, null, nex);
+            }
+
+        }
+    }//GEN-LAST:event_jButton_editarMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -15,7 +15,7 @@ import src.models.Despesa;
 import src.utils.Constantes;
 import src.utils.DateLabelFormatter;
 
-public class Despesas extends javax.swing.JPanel {
+public class Despesas extends javax.swing.JPanel {    
     private JDatePickerImpl datePicker = null;
     
     private DefaultTableModel model = null;
@@ -86,14 +86,13 @@ public class Despesas extends javax.swing.JPanel {
     
     private void setEstadoPadraoBotoes() {
         this.jButton_salvar.setEnabled(false);
-        this.jButton_editar.setEnabled(false);
         this.jButton_Excluir.setEnabled(false);
 
         this.jButton_novo.setEnabled(true);
         this.jButton_atualizar.setEnabled(true);
     }
     
-    private void limparInputs(){
+    private void limparInputs(){        
         this.jTextField_nome.setText(null);
         this.jComboBox_categoria.setSelectedIndex(0);
         this.jTextField_descricao.setText(null);
@@ -208,7 +207,6 @@ public class Despesas extends javax.swing.JPanel {
         jLabel_dataDespesa = new javax.swing.JLabel();
         jPanel_acoes = new javax.swing.JPanel();
         jButton_novo = new javax.swing.JButton();
-        jButton_editar = new javax.swing.JButton();
         jButton_Excluir = new javax.swing.JButton();
         jButton_atualizar = new javax.swing.JButton();
         jTextField_pesquisar = new javax.swing.JTextField();
@@ -309,14 +307,6 @@ public class Despesas extends javax.swing.JPanel {
             }
         });
 
-        jButton_editar.setText("Editar");
-        jButton_editar.setEnabled(false);
-        jButton_editar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton_editarActionPerformed(evt);
-            }
-        });
-
         jButton_Excluir.setText("Excluir");
         jButton_Excluir.setEnabled(false);
         jButton_Excluir.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -360,16 +350,14 @@ public class Despesas extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton_novo)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton_editar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton_Excluir)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton_atualizar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField_pesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jTextField_pesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton_pesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(65, Short.MAX_VALUE))
+                .addGap(18, 18, 18))
         );
         jPanel_acoesLayout.setVerticalGroup(
             jPanel_acoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -377,7 +365,6 @@ public class Despesas extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(jPanel_acoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton_novo)
-                    .addComponent(jButton_editar)
                     .addComponent(jButton_Excluir)
                     .addComponent(jButton_atualizar)
                     .addComponent(jTextField_pesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -393,7 +380,7 @@ public class Despesas extends javax.swing.JPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(5, 5, 5)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel_inputs, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jPanel_inputs, javax.swing.GroupLayout.PREFERRED_SIZE, 660, Short.MAX_VALUE)
                     .addComponent(jPanel_acoes, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jScrollPane1))
                 .addGap(5, 5, 5))
@@ -462,27 +449,20 @@ public class Despesas extends javax.swing.JPanel {
     }//GEN-LAST:event_jButton_salvarActionPerformed
 
     private void jTable_despesasFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTable_despesasFocusGained
-        this.jButton_Excluir.setEnabled(true);
-        this.jButton_editar.setEnabled(true);
+            this.jButton_Excluir.setEnabled(true);
     }//GEN-LAST:event_jTable_despesasFocusGained
 
     private void jTable_despesasFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTable_despesasFocusLost
         this.jButton_Excluir.setEnabled(false);
-        this.jButton_editar.setEnabled(false);
     }//GEN-LAST:event_jTable_despesasFocusLost
 
     private void jComboBox_categoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox_categoriaActionPerformed
        this.handleChangeTipoDespesa();
     }//GEN-LAST:event_jComboBox_categoriaActionPerformed
 
-    private void jButton_editarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_editarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton_editarActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton_Excluir;
     private javax.swing.JButton jButton_atualizar;
-    private javax.swing.JButton jButton_editar;
     private javax.swing.JButton jButton_novo;
     private javax.swing.JButton jButton_pesquisar;
     private javax.swing.JButton jButton_salvar;

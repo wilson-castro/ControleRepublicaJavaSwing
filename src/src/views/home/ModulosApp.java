@@ -2,7 +2,7 @@
 package src.views.home;
 
 public enum ModulosApp {
-    PESSOAS, DESPESAS, RESERVAS, VALOR_PAGO_NO_MES;
+    PESSOAS, DESPESAS, RESERVAS, INFO_RESERVA, VALOR_PAGAR, CALCULAR;
 
     public boolean isPessoas(){ return this.equals(PESSOAS); }
     
@@ -10,6 +10,10 @@ public enum ModulosApp {
     
     public boolean isReservas(){ return this.equals(RESERVAS); }
     
-    public boolean isValorPagoNoMes(){ return this.equals(VALOR_PAGO_NO_MES); }
+    public boolean isInfoReserva(){ return this.equals(INFO_RESERVA); }
+    
+    public boolean isValorAPagar() { return this.equals(VALOR_PAGAR); }
+    
+    public boolean isCalcular() { return this.equals(CALCULAR); }
     
 }
