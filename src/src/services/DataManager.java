@@ -62,6 +62,16 @@ public class DataManager<T> {
         return null;
     }
 
+    public ArrayList<String> getIfContains(String search) {
+        ArrayList<String> matches = new ArrayList<>();
+        Pattern regex = Pattern.compile("^\\b(.*" + search + ".*)\\b", Pattern.MULTILINE);
+        Matcher regexMatcher = regex.matcher(getStringData());
+        while (regexMatcher.find()) {
+            matches.add(regexMatcher.group());
+        }
+        return matches;
+    }
+
     @SuppressWarnings("unchecked")
     public <Y> Y getProperty(String name, String id) throws Exception {
         String dataString = getById(id);
@@ -334,16 +344,16 @@ public class DataManager<T> {
             throw new Exception("Arquivo não encontrado");
         }
     }
-    
+
     public boolean update(String id, String updatedLine) throws Exception {
         String data = readFile();
         String user = getById(id);
         if (user == null) {
             throw new Exception("Registro não existe!");
         }
-        data = data.replace(user, id+";"+updatedLine);
+        data = data.replace(user, id + ";" + updatedLine);
         try {
-            new PrintWriter(this.filePath).close(); 
+            new PrintWriter(this.filePath).close();
             try ( OutputStreamWriter output = new OutputStreamWriter(new FileOutputStream(this.filePath, true), StandardCharsets.UTF_8)) {
                 Writer writer = new BufferedWriter(output);
                 writer.write(data.trim());

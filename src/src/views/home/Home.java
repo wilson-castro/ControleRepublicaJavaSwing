@@ -11,6 +11,7 @@ import src.models.Despesa;
 import src.models.Troca;
 import src.services.DataManager;
 import src.utils.Constantes;
+import src.views.despesas.CalcularValor;
 import src.views.despesas.Despesas;
 import src.views.pessoas.Pessoas;
 import src.views.reservas.Reservas;
@@ -22,23 +23,21 @@ public class Home extends javax.swing.JFrame {
     private volatile int myY = 0;
 
     private ModulosApp moduloAtual = null;
-    
 
-    
     private void handleShowValorAPagarMesAtual() {
         try {
             float valorAPagar = 0;
             LocalDate today = LocalDate.now();
             String monthP = String.format("%02d", today.getMonthValue());
             String yearP = today.getYear() + "";
-            
+
             JOptionPane.showMessageDialog(this,
-                "O Valor a pagar no mês corrente é: " +
-                new DataManager<Despesa>(Despesa.class.getName(), Constantes.DIRETORIO_FILE, true, "despesas_" + monthP + "_" + yearP)
-                    .getDataManagerList().stream()
-                    .map( Despesa::getValor_despesa)
-                    .reduce(valorAPagar, Float::sum).toString()
-                ,"Informativo do Sistema", 1
+                    "O Valor a pagar no mês corrente é: "
+                    + new DataManager<Despesa>(Despesa.class.getName(), Constantes.DIRETORIO_FILE, true, "despesas_" + monthP + "_" + yearP)
+                            .getDataManagerList().stream()
+                            .map(Despesa::getValor_despesa)
+                            .reduce(valorAPagar, Float::sum).toString(),
+                    "Informativo do Sistema", 1
             );
         } catch (Exception ex) {
             Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
@@ -50,14 +49,15 @@ public class Home extends javax.swing.JFrame {
     }
 
     private void setDefaultColorAllMenuItems() {
-        this.jPanel_menuItemPessoas.setBackground(new Color(72, 75, 72));
-        this.jPanel_menuItemDespesas.setBackground(new Color(72, 75, 72));
-        this.jPanel_menuItemReservas.setBackground(new Color(72, 75, 72));
-        this.jPanel_menuItemInfoReserva.setBackground(new Color(72, 75, 72));
+        this.jLabel_menuItemPessoas.setBackground(new Color(28, 28, 28));
+        this.jLabel_menuItemDespesas.setBackground(new Color(28, 28, 28));
+        this.jLabel_menuItemReservas.setBackground(new Color(28, 28, 28));
+        this.jLabel_menuItemInfoReserva.setBackground(new Color(28, 28, 28));
+        this.jLabel_menuItemCalcular.setBackground(new Color(28, 28, 28));
     }
 
     private Color getColorDoMenuItemPeloModuloAtual(ModulosApp modulo) {
-        return modulo.equals(moduloAtual) ? new Color(54, 57, 54) : new Color(72, 75, 72);
+        return modulo.equals(moduloAtual) ? new Color(255, 57, 54) : new Color(28, 28, 28);
     }
 
     private void handleItemMenuExited(ModulosApp moduleExited) {
@@ -65,17 +65,17 @@ public class Home extends javax.swing.JFrame {
 
         switch (moduleExited) {
             case PESSOAS ->
-                this.jPanel_menuItemPessoas.setBackground(corPadraoItemMenu);
+                this.jLabel_menuItemPessoas.setBackground(corPadraoItemMenu);
             case DESPESAS ->
-                this.jPanel_menuItemDespesas.setBackground(corPadraoItemMenu);
+                this.jLabel_menuItemDespesas.setBackground(corPadraoItemMenu);
             case RESERVAS ->
-                this.jPanel_menuItemReservas.setBackground(corPadraoItemMenu);
+                this.jLabel_menuItemReservas.setBackground(corPadraoItemMenu);
             case INFO_RESERVA ->
-                this.jPanel_menuItemInfoReserva.setBackground(corPadraoItemMenu);
+                this.jLabel_menuItemInfoReserva.setBackground(corPadraoItemMenu);
             case CALCULAR ->
-                    this.jPanel_menuItemCalcular.setBackground(corPadraoItemMenu);
+                this.jLabel_menuItemCalcular.setBackground(corPadraoItemMenu);
             case VALOR_PAGAR ->
-                this.jPanel_menuItemValorAPagar.setBackground(corPadraoItemMenu);
+                this.jLabel_menuItemValorAPagar.setBackground(corPadraoItemMenu);
             default -> {
                 setDefaultColorAllMenuItems();
             }
@@ -83,30 +83,30 @@ public class Home extends javax.swing.JFrame {
     }
 
     private void handleColorItemMenuSelected(ModulosApp moduloSelecionado) {
-        Color corPadraoItemMenu = new Color(72, 75, 72);
-        Color corModuloSelecionado = new Color(54, 57, 54);
+        Color corPadraoItemMenu = new Color(255, 75, 72);
+        Color corModuloSelecionado = new Color(255, 57, 54);
 
         setDefaultColorAllMenuItems();
         switch (moduloSelecionado) {
             case PESSOAS ->
-                this.jPanel_menuItemPessoas.setBackground(corModuloSelecionado);
+                this.jLabel_menuItemPessoas.setBackground(corModuloSelecionado);
             case DESPESAS ->
-                this.jPanel_menuItemDespesas.setBackground(corModuloSelecionado);
+                this.jLabel_menuItemDespesas.setBackground(corModuloSelecionado);
             case RESERVAS ->
-                this.jPanel_menuItemReservas.setBackground(corModuloSelecionado);
+                this.jLabel_menuItemReservas.setBackground(corModuloSelecionado);
             case INFO_RESERVA ->
-                this.jPanel_menuItemInfoReserva.setBackground(corModuloSelecionado);
+                this.jLabel_menuItemInfoReserva.setBackground(corModuloSelecionado);
             case CALCULAR ->
-                    this.jPanel_menuItemCalcular.setBackground(corModuloSelecionado);
+                this.jLabel_menuItemCalcular.setBackground(corModuloSelecionado);
             case VALOR_PAGAR ->
-                this.jPanel_menuItemValorAPagar.setBackground(corModuloSelecionado);
+                this.jLabel_menuItemValorAPagar.setBackground(corModuloSelecionado);
             default -> {
-                this.jPanel_menuItemPessoas.setBackground(corPadraoItemMenu);
-                this.jPanel_menuItemDespesas.setBackground(corPadraoItemMenu);
-                this.jPanel_menuItemReservas.setBackground(corPadraoItemMenu);
-                this.jPanel_menuItemInfoReserva.setBackground(corPadraoItemMenu);
-                this.jPanel_menuItemValorAPagar.setBackground(corPadraoItemMenu);
-                this.jPanel_menuItemCalcular.setBackground(corPadraoItemMenu);
+                this.jLabel_menuItemPessoas.setBackground(corPadraoItemMenu);
+                this.jLabel_menuItemDespesas.setBackground(corPadraoItemMenu);
+                this.jLabel_menuItemReservas.setBackground(corPadraoItemMenu);
+                this.jLabel_menuItemInfoReserva.setBackground(corPadraoItemMenu);
+                this.jLabel_menuItemValorAPagar.setBackground(corPadraoItemMenu);
+                this.jLabel_menuItemCalcular.setBackground(corPadraoItemMenu);
             }
         }
     }
@@ -133,23 +133,17 @@ public class Home extends javax.swing.JFrame {
         jPanel_actionsToolbar = new javax.swing.JPanel();
         jLabel_botaoFechar = new javax.swing.JLabel();
         jLabel_botaoMinimizar = new javax.swing.JLabel();
-        jPanel_borderToobar = new javax.swing.JPanel();
         jPanel_sidebar = new javax.swing.JPanel();
         jPanel_container_imgHome = new javax.swing.JPanel();
         jLabel_imgHome = new javax.swing.JLabel();
-        jPanel_lineIconHomeMainMenu = new javax.swing.JPanel();
-        jPanel_menuItemPessoas = new src.components.JPanel_Rounded();
-        jLabel_menuItemPessoas = new javax.swing.JLabel();
-        jPanel_menuItemDespesas = new src.components.JPanel_Rounded();
-        jLabel_menuItemDespesas = new javax.swing.JLabel();
-        jPanel_menuItemReservas = new src.components.JPanel_Rounded();
-        jLabel_menuItemReservas = new javax.swing.JLabel();
-        jPanel_menuItemInfoReserva = new src.components.JPanel_Rounded();
+        jSeparator1 = new javax.swing.JSeparator();
+        jPanel_menuItemDespesas1 = new src.components.JPanel_Rounded();
         jLabel_menuItemInfoReserva = new javax.swing.JLabel();
-        jPanel_menuItemCalcular = new src.components.JPanel_Rounded();
-        jLabel_menuItemCalcular = new javax.swing.JLabel();
-        jPanel_menuItemValorAPagar = new src.components.JPanel_Rounded();
         jLabel_menuItemValorAPagar = new javax.swing.JLabel();
+        jLabel_menuItemCalcular = new javax.swing.JLabel();
+        jLabel_menuItemPessoas = new javax.swing.JLabel();
+        jLabel_menuItemDespesas = new javax.swing.JLabel();
+        jLabel_menuItemReservas = new javax.swing.JLabel();
         jPanel_container = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -163,7 +157,7 @@ public class Home extends javax.swing.JFrame {
         jPanel_body.setPreferredSize(new java.awt.Dimension(891, 480));
         jPanel_body.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel_toolbar.setBackground(new java.awt.Color(102, 102, 102));
+        jPanel_toolbar.setBackground(new java.awt.Color(34, 34, 34));
         jPanel_toolbar.setPreferredSize(new java.awt.Dimension(100, 35));
         jPanel_toolbar.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseDragged(java.awt.event.MouseEvent evt) {
@@ -179,7 +173,7 @@ public class Home extends javax.swing.JFrame {
         jPanel_actionsToolbar.setBackground(new java.awt.Color(102, 102, 102));
         jPanel_actionsToolbar.setPreferredSize(new java.awt.Dimension(100, 35));
 
-        jLabel_botaoFechar.setBackground(new java.awt.Color(102, 102, 102));
+        jLabel_botaoFechar.setBackground(new java.awt.Color(34, 34, 34));
         jLabel_botaoFechar.setFont(new java.awt.Font("Liberation Sans", 1, 13)); // NOI18N
         jLabel_botaoFechar.setForeground(new java.awt.Color(204, 204, 204));
         jLabel_botaoFechar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -200,7 +194,7 @@ public class Home extends javax.swing.JFrame {
             }
         });
 
-        jLabel_botaoMinimizar.setBackground(new java.awt.Color(102, 102, 102));
+        jLabel_botaoMinimizar.setBackground(new java.awt.Color(34, 34, 34));
         jLabel_botaoMinimizar.setFont(new java.awt.Font("Liberation Sans", 1, 13)); // NOI18N
         jLabel_botaoMinimizar.setForeground(new java.awt.Color(204, 204, 204));
         jLabel_botaoMinimizar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -243,7 +237,7 @@ public class Home extends javax.swing.JFrame {
         jPanel_toolbarLayout.setHorizontalGroup(
             jPanel_toolbarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_toolbarLayout.createSequentialGroup()
-                .addGap(0, 790, Short.MAX_VALUE)
+                .addContainerGap(790, Short.MAX_VALUE)
                 .addComponent(jPanel_actionsToolbar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanel_toolbarLayout.setVerticalGroup(
@@ -253,23 +247,7 @@ public class Home extends javax.swing.JFrame {
 
         jPanel_body.add(jPanel_toolbar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1, 1, 890, -1));
 
-        jPanel_borderToobar.setBackground(new java.awt.Color(66, 69, 66));
-        jPanel_borderToobar.setPreferredSize(new java.awt.Dimension(100, 1));
-
-        javax.swing.GroupLayout jPanel_borderToobarLayout = new javax.swing.GroupLayout(jPanel_borderToobar);
-        jPanel_borderToobar.setLayout(jPanel_borderToobarLayout);
-        jPanel_borderToobarLayout.setHorizontalGroup(
-            jPanel_borderToobarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 890, Short.MAX_VALUE)
-        );
-        jPanel_borderToobarLayout.setVerticalGroup(
-            jPanel_borderToobarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1, Short.MAX_VALUE)
-        );
-
-        jPanel_body.add(jPanel_borderToobar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1, 36, 890, -1));
-
-        jPanel_sidebar.setBackground(new java.awt.Color(102, 102, 102));
+        jPanel_sidebar.setBackground(new java.awt.Color(34, 34, 34));
         jPanel_sidebar.setMinimumSize(new java.awt.Dimension(210, 462));
         jPanel_sidebar.setPreferredSize(new java.awt.Dimension(220, 462));
         jPanel_sidebar.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -291,141 +269,25 @@ public class Home extends javax.swing.JFrame {
 
         jPanel_sidebar.add(jPanel_container_imgHome, new org.netbeans.lib.awtextra.AbsoluteConstraints(58, 19, -1, -1));
 
-        jPanel_lineIconHomeMainMenu.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel_lineIconHomeMainMenu.setPreferredSize(new java.awt.Dimension(190, 3));
+        jSeparator1.setBackground(new java.awt.Color(28, 28, 28));
+        jSeparator1.setForeground(new java.awt.Color(102, 102, 102));
+        jPanel_sidebar.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 113, 220, 10));
 
-        javax.swing.GroupLayout jPanel_lineIconHomeMainMenuLayout = new javax.swing.GroupLayout(jPanel_lineIconHomeMainMenu);
-        jPanel_lineIconHomeMainMenu.setLayout(jPanel_lineIconHomeMainMenuLayout);
-        jPanel_lineIconHomeMainMenuLayout.setHorizontalGroup(
-            jPanel_lineIconHomeMainMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 190, Short.MAX_VALUE)
-        );
-        jPanel_lineIconHomeMainMenuLayout.setVerticalGroup(
-            jPanel_lineIconHomeMainMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 3, Short.MAX_VALUE)
-        );
+        jPanel_menuItemDespesas1.setBackground(new java.awt.Color(28, 28, 28));
+        jPanel_menuItemDespesas1.setPreferredSize(new java.awt.Dimension(12, 30));
+        jPanel_menuItemDespesas1.setRoundBottomLeft(10);
+        jPanel_menuItemDespesas1.setRoundBottomRight(10);
+        jPanel_menuItemDespesas1.setRoundTopLeft(10);
+        jPanel_menuItemDespesas1.setRoundTopRight(10);
 
-        jPanel_sidebar.add(jPanel_lineIconHomeMainMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 119, -1, -1));
-
-        jPanel_menuItemPessoas.setBackground(new java.awt.Color(72, 75, 72));
-        jPanel_menuItemPessoas.setRoundBottomLeft(10);
-        jPanel_menuItemPessoas.setRoundBottomRight(10);
-        jPanel_menuItemPessoas.setRoundTopLeft(10);
-        jPanel_menuItemPessoas.setRoundTopRight(10);
-
-        jLabel_menuItemPessoas.setBackground(new java.awt.Color(54, 57, 54));
-        jLabel_menuItemPessoas.setFont(new java.awt.Font("Liberation Sans", 1, 14)); // NOI18N
-        jLabel_menuItemPessoas.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel_menuItemPessoas.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel_menuItemPessoas.setText("PESSOAS");
-        jLabel_menuItemPessoas.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jLabel_menuItemPessoasMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                jLabel_menuItemPessoasMouseExited(evt);
-            }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                jLabel_menuItemPessoasMousePressed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel_menuItemPessoasLayout = new javax.swing.GroupLayout(jPanel_menuItemPessoas);
-        jPanel_menuItemPessoas.setLayout(jPanel_menuItemPessoasLayout);
-        jPanel_menuItemPessoasLayout.setHorizontalGroup(
-            jPanel_menuItemPessoasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel_menuItemPessoas, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
-        );
-        jPanel_menuItemPessoasLayout.setVerticalGroup(
-            jPanel_menuItemPessoasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel_menuItemPessoas, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
-        );
-
-        jPanel_sidebar.add(jPanel_menuItemPessoas, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 160, 180, -1));
-
-        jPanel_menuItemDespesas.setBackground(new java.awt.Color(72, 75, 72));
-        jPanel_menuItemDespesas.setPreferredSize(new java.awt.Dimension(12, 30));
-        jPanel_menuItemDespesas.setRoundBottomLeft(10);
-        jPanel_menuItemDespesas.setRoundBottomRight(10);
-        jPanel_menuItemDespesas.setRoundTopLeft(10);
-        jPanel_menuItemDespesas.setRoundTopRight(10);
-
-        jLabel_menuItemDespesas.setFont(new java.awt.Font("Liberation Sans", 1, 14)); // NOI18N
-        jLabel_menuItemDespesas.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel_menuItemDespesas.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel_menuItemDespesas.setText("DESPESAS");
-        jLabel_menuItemDespesas.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jLabel_menuItemDespesasMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                jLabel_menuItemDespesasMouseExited(evt);
-            }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                jLabel_menuItemDespesasMousePressed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel_menuItemDespesasLayout = new javax.swing.GroupLayout(jPanel_menuItemDespesas);
-        jPanel_menuItemDespesas.setLayout(jPanel_menuItemDespesasLayout);
-        jPanel_menuItemDespesasLayout.setHorizontalGroup(
-            jPanel_menuItemDespesasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel_menuItemDespesas, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
-        );
-        jPanel_menuItemDespesasLayout.setVerticalGroup(
-            jPanel_menuItemDespesasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel_menuItemDespesas, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
-        );
-
-        jPanel_sidebar.add(jPanel_menuItemDespesas, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 210, 180, -1));
-
-        jPanel_menuItemReservas.setBackground(new java.awt.Color(72, 75, 72));
-        jPanel_menuItemReservas.setPreferredSize(new java.awt.Dimension(12, 30));
-        jPanel_menuItemReservas.setRoundBottomLeft(10);
-        jPanel_menuItemReservas.setRoundBottomRight(10);
-        jPanel_menuItemReservas.setRoundTopLeft(10);
-        jPanel_menuItemReservas.setRoundTopRight(10);
-
-        jLabel_menuItemReservas.setFont(new java.awt.Font("Liberation Sans", 1, 14)); // NOI18N
-        jLabel_menuItemReservas.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel_menuItemReservas.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel_menuItemReservas.setText("RESERVAS");
-        jLabel_menuItemReservas.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jLabel_menuItemReservasMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                jLabel_menuItemReservasMouseExited(evt);
-            }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                jLabel_menuItemReservasMousePressed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel_menuItemReservasLayout = new javax.swing.GroupLayout(jPanel_menuItemReservas);
-        jPanel_menuItemReservas.setLayout(jPanel_menuItemReservasLayout);
-        jPanel_menuItemReservasLayout.setHorizontalGroup(
-            jPanel_menuItemReservasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel_menuItemReservas, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
-        );
-        jPanel_menuItemReservasLayout.setVerticalGroup(
-            jPanel_menuItemReservasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel_menuItemReservas, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
-        );
-
-        jPanel_sidebar.add(jPanel_menuItemReservas, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 260, 180, -1));
-
-        jPanel_menuItemInfoReserva.setBackground(new java.awt.Color(72, 75, 72));
-        jPanel_menuItemInfoReserva.setPreferredSize(new java.awt.Dimension(12, 30));
-        jPanel_menuItemInfoReserva.setRoundBottomLeft(10);
-        jPanel_menuItemInfoReserva.setRoundBottomRight(10);
-        jPanel_menuItemInfoReserva.setRoundTopLeft(10);
-        jPanel_menuItemInfoReserva.setRoundTopRight(10);
-
+        jLabel_menuItemInfoReserva.setBackground(new java.awt.Color(28, 28, 28));
         jLabel_menuItemInfoReserva.setFont(new java.awt.Font("Liberation Sans", 1, 14)); // NOI18N
         jLabel_menuItemInfoReserva.setForeground(new java.awt.Color(255, 255, 255));
         jLabel_menuItemInfoReserva.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel_menuItemInfoReserva.setText("INFO RESERVA");
+        jLabel_menuItemInfoReserva.setMaximumSize(new java.awt.Dimension(73, 19));
+        jLabel_menuItemInfoReserva.setMinimumSize(new java.awt.Dimension(73, 19));
+        jLabel_menuItemInfoReserva.setOpaque(true);
         jLabel_menuItemInfoReserva.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 jLabel_menuItemInfoReservaMouseEntered(evt);
@@ -438,66 +300,14 @@ public class Home extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout jPanel_menuItemInfoReservaLayout = new javax.swing.GroupLayout(jPanel_menuItemInfoReserva);
-        jPanel_menuItemInfoReserva.setLayout(jPanel_menuItemInfoReservaLayout);
-        jPanel_menuItemInfoReservaLayout.setHorizontalGroup(
-            jPanel_menuItemInfoReservaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel_menuItemInfoReserva, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
-        );
-        jPanel_menuItemInfoReservaLayout.setVerticalGroup(
-            jPanel_menuItemInfoReservaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel_menuItemInfoReserva, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
-        );
-
-        jPanel_sidebar.add(jPanel_menuItemInfoReserva, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 300, 180, -1));
-
-        jPanel_menuItemCalcular.setBackground(new java.awt.Color(72, 75, 72));
-        jPanel_menuItemCalcular.setPreferredSize(new java.awt.Dimension(12, 30));
-        jPanel_menuItemCalcular.setRoundBottomLeft(10);
-        jPanel_menuItemCalcular.setRoundBottomRight(10);
-        jPanel_menuItemCalcular.setRoundTopLeft(10);
-        jPanel_menuItemCalcular.setRoundTopRight(10);
-
-        jLabel_menuItemCalcular.setFont(new java.awt.Font("Liberation Sans", 1, 14)); // NOI18N
-        jLabel_menuItemCalcular.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel_menuItemCalcular.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel_menuItemCalcular.setText("CALCULAR VALOR");
-        jLabel_menuItemCalcular.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jLabel_menuItemCalcularMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                jLabel_menuItemCalcularMouseExited(evt);
-            }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                jLabel_menuItemCalcularMousePressed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel_menuItemCalcularLayout = new javax.swing.GroupLayout(jPanel_menuItemCalcular);
-        jPanel_menuItemCalcular.setLayout(jPanel_menuItemCalcularLayout);
-        jPanel_menuItemCalcularLayout.setHorizontalGroup(
-            jPanel_menuItemCalcularLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel_menuItemCalcular, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
-        );
-        jPanel_menuItemCalcularLayout.setVerticalGroup(
-            jPanel_menuItemCalcularLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel_menuItemCalcular, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
-        );
-
-        jPanel_sidebar.add(jPanel_menuItemCalcular, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 380, 180, 30));
-
-        jPanel_menuItemValorAPagar.setBackground(new java.awt.Color(72, 75, 72));
-        jPanel_menuItemValorAPagar.setPreferredSize(new java.awt.Dimension(12, 30));
-        jPanel_menuItemValorAPagar.setRoundBottomLeft(10);
-        jPanel_menuItemValorAPagar.setRoundBottomRight(10);
-        jPanel_menuItemValorAPagar.setRoundTopLeft(10);
-        jPanel_menuItemValorAPagar.setRoundTopRight(10);
-
+        jLabel_menuItemValorAPagar.setBackground(new java.awt.Color(28, 28, 28));
         jLabel_menuItemValorAPagar.setFont(new java.awt.Font("Liberation Sans", 1, 14)); // NOI18N
         jLabel_menuItemValorAPagar.setForeground(new java.awt.Color(255, 255, 255));
         jLabel_menuItemValorAPagar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel_menuItemValorAPagar.setText("VALOR À PAGAR");
+        jLabel_menuItemValorAPagar.setMaximumSize(new java.awt.Dimension(73, 19));
+        jLabel_menuItemValorAPagar.setMinimumSize(new java.awt.Dimension(73, 19));
+        jLabel_menuItemValorAPagar.setOpaque(true);
         jLabel_menuItemValorAPagar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 jLabel_menuItemValorAPagarMouseEntered(evt);
@@ -510,28 +320,127 @@ public class Home extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout jPanel_menuItemValorAPagarLayout = new javax.swing.GroupLayout(jPanel_menuItemValorAPagar);
-        jPanel_menuItemValorAPagar.setLayout(jPanel_menuItemValorAPagarLayout);
-        jPanel_menuItemValorAPagarLayout.setHorizontalGroup(
-            jPanel_menuItemValorAPagarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel_menuItemValorAPagar, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
+        jLabel_menuItemCalcular.setBackground(new java.awt.Color(28, 28, 28));
+        jLabel_menuItemCalcular.setFont(new java.awt.Font("Liberation Sans", 1, 14)); // NOI18N
+        jLabel_menuItemCalcular.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel_menuItemCalcular.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel_menuItemCalcular.setText("CALCULAR VALOR");
+        jLabel_menuItemCalcular.setMaximumSize(new java.awt.Dimension(73, 19));
+        jLabel_menuItemCalcular.setMinimumSize(new java.awt.Dimension(73, 19));
+        jLabel_menuItemCalcular.setOpaque(true);
+        jLabel_menuItemCalcular.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jLabel_menuItemCalcularMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jLabel_menuItemCalcularMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jLabel_menuItemCalcularMousePressed(evt);
+            }
+        });
+
+        jLabel_menuItemPessoas.setBackground(new java.awt.Color(28, 28, 28));
+        jLabel_menuItemPessoas.setFont(new java.awt.Font("Liberation Sans", 1, 14)); // NOI18N
+        jLabel_menuItemPessoas.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel_menuItemPessoas.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel_menuItemPessoas.setText("PESSOAS");
+        jLabel_menuItemPessoas.setMaximumSize(new java.awt.Dimension(73, 19));
+        jLabel_menuItemPessoas.setMinimumSize(new java.awt.Dimension(73, 19));
+        jLabel_menuItemPessoas.setOpaque(true);
+        jLabel_menuItemPessoas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jLabel_menuItemPessoasMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jLabel_menuItemPessoasMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jLabel_menuItemPessoasMousePressed(evt);
+            }
+        });
+
+        jLabel_menuItemDespesas.setBackground(new java.awt.Color(28, 28, 28));
+        jLabel_menuItemDespesas.setFont(new java.awt.Font("Liberation Sans", 1, 14)); // NOI18N
+        jLabel_menuItemDespesas.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel_menuItemDespesas.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel_menuItemDespesas.setText("DESPESAS");
+        jLabel_menuItemDespesas.setOpaque(true);
+        jLabel_menuItemDespesas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jLabel_menuItemDespesasMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jLabel_menuItemDespesasMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jLabel_menuItemDespesasMousePressed(evt);
+            }
+        });
+
+        jLabel_menuItemReservas.setBackground(new java.awt.Color(28, 28, 28));
+        jLabel_menuItemReservas.setFont(new java.awt.Font("Liberation Sans", 1, 14)); // NOI18N
+        jLabel_menuItemReservas.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel_menuItemReservas.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel_menuItemReservas.setText("RESERVAS");
+        jLabel_menuItemReservas.setMaximumSize(new java.awt.Dimension(73, 19));
+        jLabel_menuItemReservas.setMinimumSize(new java.awt.Dimension(73, 19));
+        jLabel_menuItemReservas.setOpaque(true);
+        jLabel_menuItemReservas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jLabel_menuItemReservasMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jLabel_menuItemReservasMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jLabel_menuItemReservasMousePressed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel_menuItemDespesas1Layout = new javax.swing.GroupLayout(jPanel_menuItemDespesas1);
+        jPanel_menuItemDespesas1.setLayout(jPanel_menuItemDespesas1Layout);
+        jPanel_menuItemDespesas1Layout.setHorizontalGroup(
+            jPanel_menuItemDespesas1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel_menuItemDespesas, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jLabel_menuItemCalcular, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jLabel_menuItemInfoReserva, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jLabel_menuItemValorAPagar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_menuItemDespesas1Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addGroup(jPanel_menuItemDespesas1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel_menuItemPessoas, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel_menuItemReservas, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)))
         );
-        jPanel_menuItemValorAPagarLayout.setVerticalGroup(
-            jPanel_menuItemValorAPagarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel_menuItemValorAPagar, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+        jPanel_menuItemDespesas1Layout.setVerticalGroup(
+            jPanel_menuItemDespesas1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel_menuItemDespesas1Layout.createSequentialGroup()
+                .addGap(12, 12, 12)
+                .addComponent(jLabel_menuItemPessoas, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel_menuItemReservas, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel_menuItemDespesas, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel_menuItemInfoReserva, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel_menuItemValorAPagar, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel_menuItemCalcular, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
-        jPanel_sidebar.add(jPanel_menuItemValorAPagar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 340, 180, 30));
+        jPanel_sidebar.add(jPanel_menuItemDespesas1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 120, 200, 320));
 
-        jPanel_body.add(jPanel_sidebar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1, 37, -1, 442));
+        jPanel_body.add(jPanel_sidebar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1, 29, -1, 470));
 
-        jPanel_container.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel_container.setBackground(new java.awt.Color(51, 51, 51));
         jPanel_container.setMaximumSize(new java.awt.Dimension(670, 440));
         jPanel_container.setMinimumSize(new java.awt.Dimension(670, 440));
         jPanel_container.setLayout(new java.awt.CardLayout());
-        jPanel_body.add(jPanel_container, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 37, 670, 446));
+        jPanel_body.add(jPanel_container, new org.netbeans.lib.awtextra.AbsoluteConstraints(221, 36, 669, 460));
 
-        getContentPane().add(jPanel_body, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 480));
+        getContentPane().add(jPanel_body, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 490));
 
         pack();
         setLocationRelativeTo(null);
@@ -542,15 +451,15 @@ public class Home extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel_botaoFecharMouseEntered
 
     private void jLabel_botaoFecharMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel_botaoFecharMouseExited
-        this.jLabel_botaoFechar.setBackground(new Color(102, 102, 102));
+        this.jLabel_botaoFechar.setBackground(new Color(34, 34, 34));
     }//GEN-LAST:event_jLabel_botaoFecharMouseExited
 
     private void jLabel_botaoMinimizarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel_botaoMinimizarMouseEntered
-                this.jLabel_botaoMinimizar.setBackground(new Color(60, 63, 65));
+        this.jLabel_botaoMinimizar.setBackground(new Color(60, 63, 65));
     }//GEN-LAST:event_jLabel_botaoMinimizarMouseEntered
 
     private void jLabel_botaoMinimizarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel_botaoMinimizarMouseExited
-        this.jLabel_botaoMinimizar.setBackground(new Color(102, 102, 102));
+        this.jLabel_botaoMinimizar.setBackground(new Color(34, 34, 34));
     }//GEN-LAST:event_jLabel_botaoMinimizarMouseExited
 
     private void jLabel_botaoFecharMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel_botaoFecharMousePressed
@@ -574,19 +483,19 @@ public class Home extends javax.swing.JFrame {
     }//GEN-LAST:event_jPanel_toolbarMousePressed
 
     private void jLabel_menuItemPessoasMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel_menuItemPessoasMouseEntered
-        this.jPanel_menuItemPessoas.setBackground(new Color(81, 86, 81));
+        this.jLabel_menuItemPessoas.setBackground(new Color(255, 86, 81));
     }//GEN-LAST:event_jLabel_menuItemPessoasMouseEntered
 
     private void jLabel_menuItemDespesasMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel_menuItemDespesasMouseEntered
-        this.jPanel_menuItemDespesas.setBackground(new Color(81, 86, 81));
+        this.jLabel_menuItemDespesas.setBackground(new Color(255, 86, 81));
     }//GEN-LAST:event_jLabel_menuItemDespesasMouseEntered
 
     private void jLabel_menuItemReservasMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel_menuItemReservasMouseEntered
-        this.jPanel_menuItemReservas.setBackground(new Color(81, 86, 81));
+        this.jLabel_menuItemReservas.setBackground(new Color(255, 86, 81));
     }//GEN-LAST:event_jLabel_menuItemReservasMouseEntered
 
     private void jLabel_menuItemInfoReservaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel_menuItemInfoReservaMouseEntered
-        this.jPanel_menuItemInfoReserva.setBackground(new Color(81, 86, 81));
+        this.jLabel_menuItemInfoReserva.setBackground(new Color(255, 86, 81));
     }//GEN-LAST:event_jLabel_menuItemInfoReservaMouseEntered
 
     private void jLabel_menuItemPessoasMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel_menuItemPessoasMouseExited
@@ -630,7 +539,7 @@ public class Home extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel_menuItemInfoReservaMousePressed
 
     private void jLabel_menuItemCalcularMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel_menuItemCalcularMouseEntered
-        this.jPanel_menuItemCalcular.setBackground(new Color(81, 86, 81));
+        this.jLabel_menuItemCalcular.setBackground(new Color(255, 86, 81));
     }//GEN-LAST:event_jLabel_menuItemCalcularMouseEntered
 
     private void jLabel_menuItemCalcularMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel_menuItemCalcularMouseExited
@@ -638,11 +547,13 @@ public class Home extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel_menuItemCalcularMouseExited
 
     private void jLabel_menuItemCalcularMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel_menuItemCalcularMousePressed
-        // TODO add your handling code here:
+        CalcularValor in = new CalcularValor();
+        Troca.ChangePanel(jPanel_container, in);
+        handleItemMenuSelected(ModulosApp.CALCULAR, in);
     }//GEN-LAST:event_jLabel_menuItemCalcularMousePressed
 
     private void jLabel_menuItemValorAPagarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel_menuItemValorAPagarMouseEntered
-        this.jPanel_menuItemValorAPagar.setBackground(new Color(81, 86, 81));
+        this.jLabel_menuItemValorAPagar.setBackground(new Color(255, 86, 81));
     }//GEN-LAST:event_jLabel_menuItemValorAPagarMouseEntered
 
     private void jLabel_menuItemValorAPagarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel_menuItemValorAPagarMouseExited
@@ -654,10 +565,20 @@ public class Home extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel_menuItemValorAPagarMousePressed
 
     public static void main(String args[]) {
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Home().setVisible(true);
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Windows".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
             }
+        } catch (ClassNotFoundException ex) {
+        } catch (InstantiationException ex) {
+        } catch (IllegalAccessException ex) {
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        }
+        java.awt.EventQueue.invokeLater(() -> {
+            new Home().setVisible(true);
         });
     }
 
@@ -673,17 +594,12 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel_menuItemValorAPagar;
     private javax.swing.JPanel jPanel_actionsToolbar;
     private javax.swing.JPanel jPanel_body;
-    private javax.swing.JPanel jPanel_borderToobar;
     private javax.swing.JPanel jPanel_container;
     private javax.swing.JPanel jPanel_container_imgHome;
-    private javax.swing.JPanel jPanel_lineIconHomeMainMenu;
-    private src.components.JPanel_Rounded jPanel_menuItemCalcular;
-    private src.components.JPanel_Rounded jPanel_menuItemDespesas;
-    private src.components.JPanel_Rounded jPanel_menuItemInfoReserva;
-    private src.components.JPanel_Rounded jPanel_menuItemPessoas;
-    private src.components.JPanel_Rounded jPanel_menuItemReservas;
-    private src.components.JPanel_Rounded jPanel_menuItemValorAPagar;
+    private src.components.JPanel_Rounded jPanel_menuItemDespesas1;
     private javax.swing.JPanel jPanel_sidebar;
     private javax.swing.JPanel jPanel_toolbar;
+    private javax.swing.JSeparator jSeparator1;
     // End of variables declaration//GEN-END:variables
+
 }

@@ -1,0 +1,3 @@
+--1020231;Carro;LavaJato;Mobilidade;1;10.50
+--1020231;Carro;LavaJato;Mobilidade;5;10.50
+1020233;safsfdfs;fsfsfs;Fixa;<não tem>;2.0
